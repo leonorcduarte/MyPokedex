@@ -1,0 +1,21 @@
+#Gradle
+*.iml
+.gradle/
+build/
+.idea/
+out/
+/local.properties
+local.properties
+
+# OS X files
+.DS_Store
+
+# generated files
+bin/
+/captures
+.externalNativeBuild
+.cxx
+
+#built application files
+*.apk
+
