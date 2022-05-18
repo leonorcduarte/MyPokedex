@@ -79,6 +79,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                style="@style/Theme.MyPokédex"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
             <ImageView
                 android:id="@+id/poke_image"
                 android:layout_width="150dp"

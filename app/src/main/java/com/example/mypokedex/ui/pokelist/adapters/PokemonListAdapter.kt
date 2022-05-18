@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ class PokemonListAdapter(
         val id: TextView = itemView.findViewById(R.id.poke_id)
         val name: TextView = itemView.findViewById(R.id.poke_name)
         private val default_image: ConstraintLayout = itemView.findViewById(R.id.default_image)
+        private val loading: ProgressBar = itemView.findViewById(R.id.loading)
 
 
         fun bind(position: Int, pokemon: BaseModel){
@@ -38,6 +40,7 @@ class PokemonListAdapter(
             id.text = context.resources.getString(R.string.id_code, StringUtils.getFormattedId(pokeId))
 
             if(pokemon.image != null){
+                displayLoading(true)
                 default_image.visibility = View.GONE
                 pokeImage.visibility = View.VISIBLE
                 Glide.with(context).load(pokemon.image).into(pokeImage)
@@ -47,8 +50,14 @@ class PokemonListAdapter(
             }
 
             default_image.setOnClickListener{
+                default_image.visibility = View.GONE
+                displayLoading(false)
                 mListener.onPokeBallClick(position = position, pokemonName = pokemon.name)
             }
+        }
+
+        private fun displayLoading(isDisplayed: Boolean){
+            loading.visibility = if (isDisplayed) View.GONE else View.VISIBLE
         }
     }
 
