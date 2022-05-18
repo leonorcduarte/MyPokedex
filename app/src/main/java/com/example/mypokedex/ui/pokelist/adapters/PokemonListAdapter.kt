@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypokedex.R
 import com.example.mypokedex.data.model.secondarymodels.BaseModel
+import com.example.mypokedex.util.StringUtils
 
 class PokemonListAdapter(
     private var pokeList: List<BaseModel>,
@@ -32,10 +33,8 @@ class PokemonListAdapter(
 
 
         fun bind(position: Int, pokemon: BaseModel){
-            val separated = pokemon.url.split("/")
-
             name.text = pokemon.name
-            id.text = context.resources.getString(R.string.id_code, separated[6])
+            id.text = context.resources.getString(R.string.id_code, StringUtils.getSubstring(pokemon.url, "/", 6))
 
             if(pokemon.image != null){
                 default_image.visibility = View.GONE
