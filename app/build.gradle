@@ -42,6 +42,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.6.0'
 
+    //SplashScreen API
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
     //Navigation dependencies
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
