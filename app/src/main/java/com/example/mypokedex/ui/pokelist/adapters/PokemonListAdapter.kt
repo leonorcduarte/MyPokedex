@@ -26,15 +26,16 @@ class PokemonListAdapter(
     private var mListener: OnItemClickListener = listener
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val pokeImage: ImageView = itemView.findViewById(R.id.poke_image)
+        private val pokeImage: ImageView = itemView.findViewById(R.id.poke_image)
         val id: TextView = itemView.findViewById(R.id.poke_id)
         val name: TextView = itemView.findViewById(R.id.poke_name)
-        val default_image: ConstraintLayout = itemView.findViewById(R.id.default_image)
+        private val default_image: ConstraintLayout = itemView.findViewById(R.id.default_image)
 
 
         fun bind(position: Int, pokemon: BaseModel){
+            val pokeId: String = StringUtils.getSubstring(pokemon.url, "/", 6)
             name.text = pokemon.name
-            id.text = context.resources.getString(R.string.id_code, StringUtils.getSubstring(pokemon.url, "/", 6))
+            id.text = context.resources.getString(R.string.id_code, StringUtils.getFormattedId(pokeId))
 
             if(pokemon.image != null){
                 default_image.visibility = View.GONE
