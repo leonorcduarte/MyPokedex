@@ -1,6 +1,7 @@
 package com.example.mypokedex.ui.pokelist
 
 import androidx.lifecycle.*
+import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonResponse
 import com.example.mypokedex.repository.PokemonListRepository
 import com.example.mypokedex.util.Resource
@@ -17,14 +18,27 @@ constructor(
     private val pokemonListRepository: PokemonListRepository
 ): ViewModel() {
 
-    private val _resource: MutableLiveData<Resource<PokemonResponse>> = MutableLiveData()
+    private val _pokemonResponse: MutableLiveData<Resource<PokemonResponse>> = MutableLiveData()
     val pokemonList: LiveData<Resource<PokemonResponse>>
-        get() = _resource
+        get() = _pokemonResponse
+
+    private val _pokemonDetail: MutableLiveData<Resource<Pokemon>> = MutableLiveData()
+    val pokemonDetail: LiveData<Resource<Pokemon>>
+        get() = _pokemonDetail
 
     fun getPokemonList(limit: Int, offset: Int) {
         viewModelScope.launch {
             pokemonListRepository.getPokemonList(limit, offset).onEach { resource ->
-                _resource.value = resource
+                _pokemonResponse.value = resource
+            }
+                .launchIn(viewModelScope)
+        }
+    }
+
+    fun getPokemonByName(name: String){
+        viewModelScope.launch {
+            pokemonListRepository.getPokemonByName(name).onEach { resource ->
+                _pokemonDetail.value = resource
             }
                 .launchIn(viewModelScope)
         }

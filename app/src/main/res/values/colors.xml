@@ -10,4 +10,5 @@
 
     <color name="app_red">#ef5350</color>
     <color name="secondary_app_red">#F18A88</color>
+    <color name="dark_gray">#393939</color>
 </resources>

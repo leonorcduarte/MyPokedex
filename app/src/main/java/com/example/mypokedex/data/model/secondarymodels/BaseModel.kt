@@ -4,5 +4,6 @@ import java.io.Serializable
 
 data class BaseModel(
     val name: String,
-    val url: String
+    val url: String,
+    var image: String?
 ) : Serializable

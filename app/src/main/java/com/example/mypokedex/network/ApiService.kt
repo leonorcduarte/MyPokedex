@@ -2,7 +2,6 @@ package com.example.mypokedex.network
 
 import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonResponse
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -10,7 +9,7 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("pokemon/{name}")
-    suspend fun getPokemonByNameList(
+    suspend fun getPokemonByName(
         @Path("name") name: String
     ): Pokemon
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My Pokédex</string>
+    <string name="id_code">#%1$s</string>
 </resources>
