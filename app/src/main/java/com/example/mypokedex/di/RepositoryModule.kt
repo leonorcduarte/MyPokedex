@@ -1,6 +1,7 @@
 package com.example.mypokedex.di
 
 import com.example.mypokedex.network.ApiService
+import com.example.mypokedex.repository.PokemonDetailRepository
 import com.example.mypokedex.repository.PokemonListRepository
 import dagger.Module
 import dagger.Provides
@@ -18,5 +19,13 @@ object RepositoryModule {
         service: ApiService
     ): PokemonListRepository{
         return PokemonListRepository(service)
+    }
+
+    @Singleton
+    @Provides
+    fun providePokemonDetailRepository(
+        service: ApiService
+    ): PokemonDetailRepository{
+        return PokemonDetailRepository(service)
     }
 }

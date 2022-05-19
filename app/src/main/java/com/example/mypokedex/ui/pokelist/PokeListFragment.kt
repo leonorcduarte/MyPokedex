@@ -4,15 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.example.mypokedex.R
+import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonResponse
+import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
 import com.example.mypokedex.data.model.secondarymodels.BaseModel
 import com.example.mypokedex.databinding.PokeListFragmentLayoutBinding
 import com.example.mypokedex.ui.pokelist.adapters.PokemonListAdapter
@@ -29,6 +34,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private var offset = 0
     private var adapterPosition = 0
     private var firsLoading = true
+    private var goToDetail = false
 
     private var adapter: PokemonListAdapter? = null
     private var pokemonList: MutableList<BaseModel> = mutableListOf()
@@ -98,6 +104,23 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         pokemonDetailObservers()
     }
 
+    override fun onPokemonClick(position: Int, pokemonName: String) {
+        goToDetail = true
+
+        viewModel.getPokemonByName(pokemonName)
+        pokemonDetailObservers()
+    }
+
+    private fun openDetail(pokemon: Pokemon?, species: PokemonSpecies?) {
+        goToDetail = false
+        val bundle: Bundle = bundleOf()
+        bundle.putSerializable("pokemonDetail", pokemon)
+        bundle.putSerializable("pokemonSpecies", species)
+        if (pokemon != null){
+            Navigation.findNavController(binding.root).navigate(R.id.pokeDetailFragment, bundle)
+        }
+    }
+
     private fun pokemonListObservers() {
         viewModel.pokemonList.observe(viewLifecycleOwner, Observer { resource ->
             when(resource.status){
@@ -120,35 +143,64 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         viewModel.pokemonDetail.observe(viewLifecycleOwner, Observer { resource ->
             when(resource.status){
                 Status.SUCCESS -> {
-                    resource.data?.sprites?.let {
-                        pokemonList[adapterPosition].image = it.front_default
-                        adapter?.updateListItem(pokemonList, adapterPosition)
+                    if (goToDetail){
+                        resource.data?.id?.let { viewModel.getPokemonSpecies(it) }
+                        pokemonSpeciesObservers(resource.data)
+                        //displayLoading(false)
+                        //openDetail(resource.data)
+                    } else {
+                        resource.data?.sprites?.let {
+                            pokemonList[adapterPosition].image = it.front_default
+                            adapter?.updateListItem(pokemonList, adapterPosition)
+                        }
                     }
                 }
                 Status.ERROR -> {
                     displayError(resource.message)
                 }
                 Status.LOADING -> {
+                    displayLoading(true)
+                }
+            }
+        })
+    }
+
+    private fun pokemonSpeciesObservers(pokemon: Pokemon?) {
+        viewModel.pokemonSpecies.observe(viewLifecycleOwner, Observer { resource ->
+            when(resource.status){
+                Status.SUCCESS -> {
+                    displayLoading(false)
+                    openDetail(pokemon, resource?.data)
+                }
+                Status.ERROR -> {
+                    displayError(resource.message)
+                }
+                Status.LOADING -> {
+                    displayLoading(true)
                 }
             }
         })
     }
 
     private fun displayLoading(isDisplayed: Boolean){
-        if (isDisplayed && firsLoading){
+        if (isDisplayed && (firsLoading || goToDetail)){
             firsLoading = false
             binding.loading.visibility = View.VISIBLE
             binding.pokemonList.visibility = View.GONE
+            if (goToDetail)
+                binding.dialog.visibility = View.GONE
         }else{
-            binding.loading.visibility = View.GONE
-            binding.dialog.visibility = View.VISIBLE
-            binding.pokemonList.visibility = View.VISIBLE
+            if (!goToDetail) {
+                binding.loading.visibility = View.GONE
+                binding.dialog.visibility = View.VISIBLE
+                binding.pokemonList.visibility = View.VISIBLE
+            }
         }
     }
 
     private fun displayError(message: String?){
         if (message != null){
-            TODO("")
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         } else{
             TODO(" text.text = Unknown error")
         }

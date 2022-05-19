@@ -23,6 +23,7 @@ class PokemonListAdapter(
 
     interface OnItemClickListener{
         fun onPokeBallClick(position: Int, pokemonName: String)
+        fun onPokemonClick(position: Int, pokemonName: String)
     }
 
     private var mListener: OnItemClickListener = listener
@@ -60,6 +61,10 @@ class PokemonListAdapter(
                 default_image.visibility = View.GONE
                 displayLoading(false)
                 mListener.onPokeBallClick(position = position, pokemonName = pokemon.name)
+            }
+
+            itemView.setOnClickListener{
+                mListener.onPokemonClick(position = position, pokemonName = pokemon.name)
             }
         }
 

@@ -3,6 +3,8 @@ package com.example.mypokedex.ui.pokelist
 import androidx.lifecycle.*
 import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonResponse
+import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
+import com.example.mypokedex.repository.PokemonDetailRepository
 import com.example.mypokedex.repository.PokemonListRepository
 import com.example.mypokedex.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,8 @@ import javax.inject.Inject
 class PokeListViewModel
 @Inject
 constructor(
-    private val pokemonListRepository: PokemonListRepository
+    private val pokemonListRepository: PokemonListRepository,
+    private val pokemonDetailRepository: PokemonDetailRepository
 ): ViewModel() {
 
     private val _pokemonResponse: MutableLiveData<Resource<PokemonResponse>> = MutableLiveData()
@@ -25,6 +28,10 @@ constructor(
     private val _pokemonDetail: MutableLiveData<Resource<Pokemon>> = MutableLiveData()
     val pokemonDetail: LiveData<Resource<Pokemon>>
         get() = _pokemonDetail
+
+    private val _pokemonSpecies: MutableLiveData<Resource<PokemonSpecies>> = MutableLiveData()
+    val pokemonSpecies: LiveData<Resource<PokemonSpecies>>
+        get() = _pokemonSpecies
 
     fun getPokemonList(limit: Int, offset: Int) {
         viewModelScope.launch {
@@ -37,8 +44,17 @@ constructor(
 
     fun getPokemonByName(name: String){
         viewModelScope.launch {
-            pokemonListRepository.getPokemonByName(name).onEach { resource ->
+            pokemonDetailRepository.getPokemonByName(name).onEach { resource ->
                 _pokemonDetail.value = resource
+            }
+                .launchIn(viewModelScope)
+        }
+    }
+
+    fun getPokemonSpecies(id: Int){
+        viewModelScope.launch {
+            pokemonDetailRepository.getPokemonSpecies(id).onEach { resource ->
+                _pokemonSpecies.value = resource
             }
                 .launchIn(viewModelScope)
         }

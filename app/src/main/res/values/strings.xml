@@ -3,4 +3,6 @@
     <string name="id_code">#%1$s</string>
     <string name="catchy_phrase">Who\'s that Pokémon</string>
     <string name="tutorial_phrase">Click to find out</string>
+    <string name="height_label">Height: %1$s</string>
+    <string name="weight_label">Weight: %1$s</string>
 </resources>
