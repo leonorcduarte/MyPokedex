@@ -26,7 +26,6 @@ class PokemonListAdapter(
     }
 
     private var mListener: OnItemClickListener = listener
-    private var isFirstTime = true
     private var _adapterPosition: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -86,7 +85,5 @@ class PokemonListAdapter(
         pokeList = newPokeList
         notifyItemInserted(position)
     }
-
-    fun getAdapterPosition() = _adapterPosition
 
 }

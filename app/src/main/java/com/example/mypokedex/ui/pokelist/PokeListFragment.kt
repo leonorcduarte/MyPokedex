@@ -64,9 +64,9 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
                 val layoutManager = recyclerView.layoutManager
                 if (layoutManager is LinearLayoutManager)
-                    lastPositionVisible = layoutManager.findLastCompletelyVisibleItemPosition()
+                    lastPositionVisible = layoutManager.findLastVisibleItemPosition()
 
-                if (newState == SCROLL_STATE_IDLE && adapter?.getAdapterPosition() == lastPositionVisible)
+                if (newState == SCROLL_STATE_IDLE && lastPositionVisible == pokemonList.size - 1)
                     getPokemonList()
             }
         })
