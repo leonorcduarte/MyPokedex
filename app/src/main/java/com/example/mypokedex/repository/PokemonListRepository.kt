@@ -19,7 +19,6 @@ constructor(
             emit(Resource.success(data=service.getPokemonList(limit, offset)))
         }catch (e: Exception){
             emit(Resource.error(data=null,message = e.message?:"Error occured"))
-
         }
     }
 
@@ -29,7 +28,6 @@ constructor(
             emit(Resource.success(data=service.getPokemonByName(name)))
         }catch (e: Exception){
             emit(Resource.error(data=null,message = e.message?:"Error occured"))
-
         }
     }
 }

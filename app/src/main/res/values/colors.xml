@@ -11,4 +11,7 @@
     <color name="app_red">#ef5350</color>
     <color name="secondary_app_red">#F18A88</color>
     <color name="dark_gray">#393939</color>
+    <color name="light_gray">#6A6A6A</color>
+    <color name="basic_blue">#3563ac</color>
+    <color name="yellow">#ffcb05</color>
 </resources>

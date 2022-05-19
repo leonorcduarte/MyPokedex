@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +26,11 @@ class PokemonListAdapter(
     }
 
     private var mListener: OnItemClickListener = listener
+    private var isFirstTime = true
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.pokemon_item_view, parent, false))
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val pokeImage: ImageView = itemView.findViewById(R.id.poke_image)
@@ -32,6 +38,7 @@ class PokemonListAdapter(
         val name: TextView = itemView.findViewById(R.id.poke_name)
         private val default_image: ConstraintLayout = itemView.findViewById(R.id.default_image)
         private val loading: ProgressBar = itemView.findViewById(R.id.loading)
+        private val dialog: LinearLayout = itemView.findViewById(R.id.dialog)
 
 
         fun bind(position: Int, pokemon: BaseModel){
@@ -49,8 +56,14 @@ class PokemonListAdapter(
                 pokeImage.visibility = View.GONE
             }
 
+            dialog.visibility = if(isFirstTime && position == 0) View.VISIBLE else View.GONE
+
             default_image.setOnClickListener{
                 default_image.visibility = View.GONE
+                if(isFirstTime && position == 0) {
+                    dialog.visibility = View.GONE
+                    isFirstTime = false
+                }
                 displayLoading(false)
                 mListener.onPokeBallClick(position = position, pokemonName = pokemon.name)
             }
@@ -59,10 +72,6 @@ class PokemonListAdapter(
         private fun displayLoading(isDisplayed: Boolean){
             loading.visibility = if (isDisplayed) View.GONE else View.VISIBLE
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.pokemon_item_view, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
