@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.example.mypokedex.R
 import com.example.mypokedex.data.model.mainmodels.PokemonResponse
 import com.example.mypokedex.data.model.secondarymodels.BaseModel
@@ -26,9 +28,10 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private var limit = 10
     private var offset = 0
     private var adapterPosition = 0
+    private var firsLoading = true
 
     private var adapter: PokemonListAdapter? = null
-    private lateinit var pokemonList: List<BaseModel>
+    private var pokemonList: MutableList<BaseModel> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,18 +47,48 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private fun initScreen() {
         viewModel = ViewModelProvider(this)[PokeListViewModel::class.java]
 
+        initAdapter()
+
         viewModel.getPokemonList(limit, offset)
 
         pokemonListObservers()
+
+        setScrollListener()
     }
 
-    private fun initAdapter(pokemons: PokemonResponse?) {
-        if (pokemons != null) {
-            pokemonList = pokemons.results
-        }
+    private fun setScrollListener() {
+        var lastPositionVisible = 0
+        binding.pokemonList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                val layoutManager = recyclerView.layoutManager
+                if (layoutManager is LinearLayoutManager)
+                    lastPositionVisible = layoutManager.findLastCompletelyVisibleItemPosition()
+
+                if (newState == SCROLL_STATE_IDLE && adapter?.getAdapterPosition() == lastPositionVisible)
+                    getPokemonList()
+            }
+        })
+    }
+
+    private fun getPokemonList() {
+        offset += limit
+        viewModel.getPokemonList(limit, offset)
+    }
+
+    private fun initAdapter() {
+        binding.pokemonList.visibility = View.GONE
         binding.pokemonList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = context?.let { PokemonListAdapter(pokemonList, this, it) }
         binding.pokemonList.adapter = adapter
+    }
+
+    private fun updateAdapter(pokemons: PokemonResponse?){
+        if (pokemons != null) {
+            pokemonList.addAll(pokemons.results)
+            adapter?.updateList(pokemonList, offset)
+        }
     }
 
     override fun onPokeBallClick(position: Int, pokemonName: String) {
@@ -70,7 +103,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
             when(resource.status){
                 Status.SUCCESS -> {
                     displayLoading(false)
-                    initAdapter(resource.data)
+                    updateAdapter(resource.data)
                 }
                 Status.ERROR -> {
                     displayLoading(false)
@@ -89,7 +122,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
                 Status.SUCCESS -> {
                     resource.data?.sprites?.let {
                         pokemonList[adapterPosition].image = it.front_default
-                        adapter?.setList(pokemonList, adapterPosition)
+                        adapter?.updateListItem(pokemonList, adapterPosition)
                     }
                 }
                 Status.ERROR -> {
@@ -102,7 +135,14 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     }
 
     private fun displayLoading(isDisplayed: Boolean){
-        binding.loading.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+        if (isDisplayed && firsLoading){
+            firsLoading = false
+            binding.loading.visibility = View.VISIBLE
+            binding.pokemonList.visibility = View.GONE
+        }else{
+            binding.loading.visibility = View.GONE
+            binding.pokemonList.visibility = View.VISIBLE
+        }
     }
 
     private fun displayError(message: String?){

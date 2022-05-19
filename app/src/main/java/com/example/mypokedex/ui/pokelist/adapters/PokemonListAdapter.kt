@@ -27,6 +27,7 @@ class PokemonListAdapter(
 
     private var mListener: OnItemClickListener = listener
     private var isFirstTime = true
+    private var _adapterPosition: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.pokemon_item_view, parent, false))
@@ -42,6 +43,7 @@ class PokemonListAdapter(
 
 
         fun bind(position: Int, pokemon: BaseModel){
+            _adapterPosition = position
             val pokeId: String = StringUtils.getSubstring(pokemon.url, "/", 6)
             name.text = pokemon.name
             id.text = context.resources.getString(R.string.id_code, StringUtils.getFormattedId(pokeId))
@@ -86,9 +88,16 @@ class PokemonListAdapter(
 
     override fun getItemCount() = pokeList.size
 
-    fun setList(newPokeList : List<BaseModel>, position: Int){
+    fun updateListItem(newPokeList : List<BaseModel>, position: Int){
         pokeList = newPokeList
         notifyItemChanged(position)
     }
+
+    fun updateList(newPokeList: List<BaseModel>, position: Int){
+        pokeList = newPokeList
+        notifyItemInserted(position)
+    }
+
+    fun getAdapterPosition() = _adapterPosition
 
 }
