@@ -141,6 +141,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
             binding.pokemonList.visibility = View.GONE
         }else{
             binding.loading.visibility = View.GONE
+            binding.dialog.visibility = View.VISIBLE
             binding.pokemonList.visibility = View.VISIBLE
         }
     }
