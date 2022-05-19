@@ -10,7 +10,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/flavor_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A strange seed was planted on its back at birth.\nThe plant sprouts and grows with this POKéMON."
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:lineSpacingExtra="3sp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/flavor_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/red_version"
+                android:textColor="@color/light_gray"
+                android:textSize="12sp"
+                android:layout_gravity="center"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_item"
