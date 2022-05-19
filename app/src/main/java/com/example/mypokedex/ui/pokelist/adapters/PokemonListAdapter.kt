@@ -59,18 +59,22 @@ class PokemonListAdapter(
             dialog.visibility = if(isFirstTime && position == 0) View.VISIBLE else View.GONE
 
             default_image.setOnClickListener{
-                default_image.visibility = View.GONE
-                if(isFirstTime && position == 0) {
-                    dialog.visibility = View.GONE
-                    isFirstTime = false
-                }
-                displayLoading(false)
+                changeLayoutOnClick(position)
                 mListener.onPokeBallClick(position = position, pokemonName = pokemon.name)
             }
         }
 
         private fun displayLoading(isDisplayed: Boolean){
             loading.visibility = if (isDisplayed) View.GONE else View.VISIBLE
+        }
+
+        private fun changeLayoutOnClick(position: Int){
+            default_image.visibility = View.GONE
+            if(isFirstTime && position == 0) {
+                dialog.visibility = View.GONE
+                isFirstTime = false
+            }
+            displayLoading(false)
         }
     }
 

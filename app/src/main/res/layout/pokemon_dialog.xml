@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="80dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="50dp"
     android:layout_marginEnd="50dp"
     android:background="@drawable/dialog_background"
@@ -16,7 +15,6 @@
         android:layout_gravity="center"
         android:text="@string/catchy_phrase"
         android:textColor="@color/yellow"
-        android:textColorHighlight="@color/basic_blue"
         android:textSize="18sp"
         android:textStyle="bold"
         android:shadowColor="@color/basic_blue"
@@ -33,16 +31,5 @@
         android:src="@drawable/pokemon_question_mark"
         android:elevation="5dp"
         android:layout_gravity="center_vertical"/>
-
-    <!--<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tutorial_phrase"
-        android:textColor="@color/light_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_dia"
-        android:textSize="10sp"/>-->
 
 </LinearLayout>
