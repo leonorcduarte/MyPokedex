@@ -64,9 +64,9 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
                 val layoutManager = recyclerView.layoutManager
                 if (layoutManager is LinearLayoutManager)
-                    lastPositionVisible = layoutManager.findLastCompletelyVisibleItemPosition()
+                    lastPositionVisible = layoutManager.findLastVisibleItemPosition()
 
-                if (newState == SCROLL_STATE_IDLE && adapter?.getAdapterPosition() == lastPositionVisible)
+                if (newState == SCROLL_STATE_IDLE && lastPositionVisible == pokemonList.size - 1)
                     getPokemonList()
             }
         })
@@ -141,6 +141,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
             binding.pokemonList.visibility = View.GONE
         }else{
             binding.loading.visibility = View.GONE
+            binding.dialog.visibility = View.VISIBLE
             binding.pokemonList.visibility = View.VISIBLE
         }
     }
