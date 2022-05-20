@@ -135,12 +135,71 @@
             </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/round_corners_background"
+                android:layout_margin="8dp"
+                android:paddingBottom="10dp"
+                android:elevation="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/evolution_chain_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/evolution_chain_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/evolution_chain_title"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="17sp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/arrow_ic"
+                        android:text="@string/evolution_chain_title"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/evolution_chain_title"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/evolution_chain_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:padding="5dp"
-                android:background="@drawable/round_corners_background"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="8dp"
+                android:background="@drawable/bottom_sheet_background"
                 android:elevation="5dp">
 
                 <TextView
@@ -161,13 +220,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textStyle="italic"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/black"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/types_title"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp" />
 
                 <View
                     android:id="@+id/vertical_separator_1"
@@ -184,8 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textStyle="italic"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/black"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/types_title"
@@ -197,9 +254,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:padding="5dp"
-                android:background="@drawable/bottom_sheet_background"
+                android:background="@drawable/inverted_bottom_sheet_background"
                 android:elevation="5dp">
 
                 <TextView
@@ -279,61 +339,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/inverted_bottom_sheet_background"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="10dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="10dp"
-                android:elevation="5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/evolution_chain_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        android:id="@+id/evolution_chain_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/evolution_chain_title"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="17sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/arrow"
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/arrow_ic"
-                        android:text="@string/evolution_chain_title"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@id/evolution_chain_title"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/evolution_chain_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"
-                    android:nestedScrollingEnabled="false"/>
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
