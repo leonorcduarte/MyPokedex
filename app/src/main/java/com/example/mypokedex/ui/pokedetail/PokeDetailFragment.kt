@@ -6,24 +6,35 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mypokedex.R
+import com.example.mypokedex.data.model.mainmodels.EvolutionChain
 import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
 import com.example.mypokedex.data.model.secondarymodels.Abilities
-import com.example.mypokedex.data.model.secondarymodels.BaseModel
 import com.example.mypokedex.data.model.secondarymodels.FlavorText
 import com.example.mypokedex.databinding.PokeDetailFragmentLayoutBinding
+import com.example.mypokedex.ui.pokedetail.adapters.EvolutionChainAdapter
+import com.example.mypokedex.util.Status
 import com.example.mypokedex.util.StringUtils
+import dagger.hilt.android.AndroidEntryPoint
 
-//@AndroidEntryPoint
+@AndroidEntryPoint
 class PokeDetailFragment: Fragment() {
 
     private lateinit var binding: PokeDetailFragmentLayoutBinding
+    private lateinit var viewModel: PokeDetailViewModel
 
     private lateinit var pokemon: Pokemon
     private lateinit var pokemonSpecies: PokemonSpecies
+
     private val colorPairList = ArrayList<Pair<String, List<Int?>>>()
+    private val evolutionChainList = arrayListOf<String>()
+    private var isEvolutionExpanded = false
+    private var infoAlreadyExists = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +49,8 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun initScreen() {
-        prepareBackgroundColors()
+        viewModel = ViewModelProvider(this)[PokeDetailViewModel::class.java]
+
         arguments?.getSerializable("pokemonDetail")?.let {
             pokemon = it as Pokemon
         }
@@ -47,10 +59,77 @@ class PokeDetailFragment: Fragment() {
             pokemonSpecies = it as PokemonSpecies
         }
 
+        prepareBackgroundColors()
         setBackgroundColor()
+        setListeners()
+        populateViews()
+    }
+
+    private fun getEvolutionChainId() =
+        StringUtils.getSubstring(pokemonSpecies.evolution_chain.url, "/", 6).toInt()
+
+
+    private fun populateViews() {
         setPokemonFlavorEntry()
         setPokemonBaseInfo()
         setPokemonAbilities()
+    }
+
+    private fun setListeners() {
+        binding.evolutionChainContainer.setOnClickListener { expandEvolutionChain() }
+    }
+
+    private fun expandEvolutionChain() {
+        when(isEvolutionExpanded){
+            false -> {
+                if (!infoAlreadyExists){
+                    viewModel.getPokemonEvolutionChain(getEvolutionChainId())
+                    pokemonEvolutionChainObservers()
+                }
+                binding.evolutionChainList.visibility = View.VISIBLE
+                binding.arrow.rotation = 180F
+                isEvolutionExpanded = true
+            }
+            true -> {
+                binding.evolutionChainList.visibility = View.GONE
+                binding.arrow.rotation = 0F
+                isEvolutionExpanded = false
+            }
+        }
+    }
+
+
+
+    private fun initEvolutionAdapter() {
+        binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        val adapter = EvolutionChainAdapter(evolutionChainList)
+        binding.evolutionChainList.adapter = adapter
+    }
+
+    private fun pokemonEvolutionChainObservers() {
+       viewModel.pokemonEvolutionChain.observe(viewLifecycleOwner, Observer { resource ->
+           when(resource.status){
+               Status.SUCCESS -> {
+                   infoAlreadyExists = true
+                   setEvolutionChain(resource.data)
+                   initEvolutionAdapter()
+               }
+               Status.ERROR -> {
+               }
+               Status.LOADING -> {
+               }
+           }
+       })
+    }
+
+    private fun setEvolutionChain(evolutionChain: EvolutionChain?) {
+        if (evolutionChain != null){
+            evolutionChainList.add(evolutionChain.chain.species.name)
+            evolutionChainList.add(evolutionChain.chain.evolves_to[0].species.name)
+            if (evolutionChain.chain.evolves_to[0].evolves_to.isNotEmpty())
+                evolutionChainList.add(evolutionChain.chain.evolves_to[0].evolves_to[0].species.name)
+        }
+
     }
 
     private fun setBackgroundColor() {
@@ -59,10 +138,7 @@ class PokeDetailFragment: Fragment() {
                 colorPair.second[0]?.let { binding.mainLayout.setBackgroundColor(it) }
                 colorPair.second[1]?.let { binding.flavorContainer.background.setTint(it) }
             }
-
         }
-
-
     }
 
     private fun prepareBackgroundColors() {

@@ -11,7 +11,8 @@
         <action
             android:id="@+id/action_pokeListFragment_to_pokeDetailFragment"
             app:destination="@id/pokeDetailFragment"
-            app:popUpTo="@id/pokeListFragment" />
+            app:popUpTo="@id/pokeListFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/pokeDetailFragment"

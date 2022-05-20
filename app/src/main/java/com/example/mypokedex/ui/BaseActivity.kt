@@ -38,7 +38,9 @@ class BaseActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id){
                 R.id.pokeListFragment -> binding.mainToolbar.title = getString(R.string.app_name)
-                R.id.pokeDetailFragment -> binding.mainToolbar.title = getString(R.string.detail)
+                R.id.pokeDetailFragment -> {
+                    binding.mainToolbar.title = getString(R.string.detail)
+                }
             }
         }
     }

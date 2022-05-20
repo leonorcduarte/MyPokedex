@@ -1,5 +1,6 @@
 package com.example.mypokedex.network
 
+import com.example.mypokedex.data.model.mainmodels.EvolutionChain
 import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonResponse
 import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
@@ -24,4 +25,9 @@ interface ApiService {
     suspend fun getPokemonSpecies(
         @Path("id") id: Int
     ): PokemonSpecies
+
+    @GET("evolution-chain/{id}")
+    suspend fun getPokemonEvolutionChain(
+        @Path("id") id: Int
+    ): EvolutionChain
 }
