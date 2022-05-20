@@ -16,7 +16,7 @@
     <color name="yellow">#ffcb05</color>
 
     <!--Pokemon colors-->
-    <color name="black_pokemon">#a9a9a9</color>
+    <color name="primary_black_pokemon">#a9a9a9</color>
     <color name="primary_blue_pokemon">#d1e4ff</color>
     <color name="secondary_blue_pokemon">#3d8bff</color>
     <color name="primary_brown_pokemon">#eedd82</color>

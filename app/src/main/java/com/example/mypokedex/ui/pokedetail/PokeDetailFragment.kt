@@ -11,10 +11,10 @@ import com.example.mypokedex.R
 import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
 import com.example.mypokedex.data.model.secondarymodels.Abilities
+import com.example.mypokedex.data.model.secondarymodels.BaseModel
 import com.example.mypokedex.data.model.secondarymodels.FlavorText
 import com.example.mypokedex.databinding.PokeDetailFragmentLayoutBinding
 import com.example.mypokedex.util.StringUtils
-import dagger.hilt.android.AndroidEntryPoint
 
 //@AndroidEntryPoint
 class PokeDetailFragment: Fragment() {
@@ -23,6 +23,7 @@ class PokeDetailFragment: Fragment() {
 
     private lateinit var pokemon: Pokemon
     private lateinit var pokemonSpecies: PokemonSpecies
+    private val colorPairList = ArrayList<Pair<String, List<Int?>>>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +38,7 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun initScreen() {
+        prepareBackgroundColors()
         arguments?.getSerializable("pokemonDetail")?.let {
             pokemon = it as Pokemon
         }
@@ -45,9 +47,55 @@ class PokeDetailFragment: Fragment() {
             pokemonSpecies = it as PokemonSpecies
         }
 
+        setBackgroundColor()
         setPokemonFlavorEntry()
         setPokemonBaseInfo()
         setPokemonAbilities()
+    }
+
+    private fun setBackgroundColor() {
+        for (colorPair: Pair<String, List<Int?>> in colorPairList){
+            if(pokemonSpecies.color.name == colorPair.first){
+                colorPair.second[0]?.let { binding.mainLayout.setBackgroundColor(it) }
+                colorPair.second[1]?.let { binding.flavorContainer.background.setTint(it) }
+            }
+
+        }
+
+
+    }
+
+    private fun prepareBackgroundColors() {
+        colorPairList.add(Pair("black",
+            listOf(context?.resources?.getColor(R.color.primary_black_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.black, activity?.theme))))
+        colorPairList.add(Pair("blue",
+            listOf(context?.resources?.getColor(R.color.primary_blue_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_blue_pokemon, activity?.theme))))
+        colorPairList.add(Pair("brown",
+            listOf(context?.resources?.getColor(R.color.primary_brown_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_brown_pokemon, activity?.theme))))
+        colorPairList.add(Pair("gray",
+            listOf(context?.resources?.getColor(R.color.primary_gray_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_gray_pokemon, activity?.theme))))
+        colorPairList.add(Pair("green",
+            listOf(context?.resources?.getColor(R.color.primary_green_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_green_pokemon, activity?.theme))))
+        colorPairList.add(Pair("pink",
+            listOf(context?.resources?.getColor(R.color.primary_pink_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_pink_pokemon, activity?.theme))))
+        colorPairList.add(Pair("purple",
+            listOf(context?.resources?.getColor(R.color.primary_purple_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_purple_pokemon, activity?.theme))))
+        colorPairList.add(Pair("red",
+            listOf(context?.resources?.getColor(R.color.primary_red_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_red_pokemon, activity?.theme))))
+        colorPairList.add(Pair("yellow",
+            listOf(context?.resources?.getColor(R.color.primary_yellow_pokemon, activity?.theme),
+                context?.resources?.getColor(R.color.secondary_yellow_pokemon, activity?.theme))))
+        colorPairList.add(Pair("white",
+            listOf(context?.resources?.getColor(R.color.white, activity?.theme),
+                context?.resources?.getColor(R.color.white, activity?.theme))))
     }
 
     private fun setPokemonAbilities() {
