@@ -131,13 +131,16 @@ class PokeDetailFragment: Fragment() {
        viewModel.pokemonEvolutionChain.observe(viewLifecycleOwner, Observer { resource ->
            when(resource.status){
                Status.SUCCESS -> {
+                   displayLoading(true)
                    infoAlreadyExists = true
                    setEvolutionChain(resource.data)
                    initEvolutionAdapter()
                }
                Status.ERROR -> {
+                   displayLoading(true)
                }
                Status.LOADING -> {
+                   displayLoading(false)
                }
            }
        })
@@ -250,5 +253,9 @@ class PokeDetailFragment: Fragment() {
 
             context?.let { Glide.with(it).load(pokemon.sprites.front_default).into(pokeImage) }
         }
+    }
+
+    private fun displayLoading(isDisplayed: Boolean){
+        binding.loading.visibility = if(isDisplayed) View.GONE else View.VISIBLE
     }
 }

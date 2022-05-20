@@ -179,6 +179,15 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <ProgressBar
+                    android:id="@+id/loading"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    style="@style/Theme.MyPokédex"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/evolution_chain_list"
                     android:layout_width="wrap_content"
