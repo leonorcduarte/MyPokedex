@@ -34,4 +34,25 @@
     <color name="primary_yellow_pokemon">#fffacd</color>
     <color name="secondary_yellow_pokemon">#ffd700</color>
 
+    <!--Pokemon Type Colors-->
+    <color name="normal_type_gray">#aaaa99</color>
+    <color name="fire_type_red">#ff4422</color>
+    <color name="water_type_blue">#3399ff</color>
+    <color name="electric_type_yellow">#ffcc33</color>
+    <color name="grass_type_green">#77cc55</color>
+    <color name="ice_type_blue">#66ccff</color>
+    <color name="fighting_type_red">#bb5544</color>
+    <color name="poison_type_purple">#aa5599</color>
+    <color name="ground_type_yellow">#ddbb55</color>
+    <color name="flying_type_purple">#8899ff</color>
+    <color name="psychic_type_pink">#ff5599</color>
+    <color name="bug_type_green">#aabb22</color>
+    <color name="rock_type_yellow">#bbaa66</color>
+    <color name="ghost_type_purple">#6666bb</color>
+    <color name="dragon_type_purple">#7766ee</color>
+    <color name="dark_type_brown">#775544</color>
+    <color name="steel_type_gray">#aaaabb</color>
+    <color name="fairy_type_pink">#ee99ee</color>
+
+
 </resources>

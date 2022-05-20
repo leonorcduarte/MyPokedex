@@ -19,6 +19,7 @@ import com.example.mypokedex.data.model.secondarymodels.FlavorText
 import com.example.mypokedex.data.model.secondarymodels.Type
 import com.example.mypokedex.databinding.PokeDetailFragmentLayoutBinding
 import com.example.mypokedex.ui.pokedetail.adapters.EvolutionChainAdapter
+import com.example.mypokedex.util.PokemonColorUtils
 import com.example.mypokedex.util.Status
 import com.example.mypokedex.util.StringUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +33,8 @@ class PokeDetailFragment: Fragment() {
     private lateinit var pokemon: Pokemon
     private lateinit var pokemonSpecies: PokemonSpecies
 
-    private val colorPairList = ArrayList<Pair<String, List<Int?>>>()
+    private var colorPairList = ArrayList<Pair<String, List<Int?>>>()
+    private var typeColorPairList = ArrayList<Pair<String, Int?>>()
     private lateinit var backgroundColorPair: Pair<String, List<Int?>>
     private val evolutionChainList = arrayListOf<String>()
     private var isEvolutionExpanded = false
@@ -61,7 +63,10 @@ class PokeDetailFragment: Fragment() {
             pokemonSpecies = it as PokemonSpecies
         }
 
-        prepareBackgroundColors()
+        //prepareBackgroundColors()
+        colorPairList = PokemonColorUtils.getBackgroundColors(activity)
+        typeColorPairList = PokemonColorUtils.getTypeColors(activity)
+
         setBackgroundColor()
         setListeners()
         populateViews()
@@ -79,21 +84,35 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun setPokemonTypes() {
+        setTypesVisibility()
         binding.apply {
-            if (pokemon.types.size == 1) {
-                typesTitle.text = context?.resources?.getString(R.string.type_title)
-                verticalSeparator1.visibility = View.GONE
-                type2.visibility = View.GONE
-            } else
-                typesTitle.text = context?.resources?.getString(R.string.types_title)
+            for(type: Type in pokemon.types) {
+                for (colorPair: Pair<String, Int?> in typeColorPairList) {
+                    when (type.slot) {
+                        1 -> {
+                            type1.text = type.type.name
+                            if (type.type.name == colorPair.first)
+                                colorPair.second?.let { type1Continer.background.setTint(it) }
+                        }
+                        2 -> {
+                            type2.text = type.type.name
+                            if (type.type.name == colorPair.first)
+                                colorPair.second?.let { type2Continer.background.setTint(it) }
+                        }
+                    }
 
-            for(type: Type in pokemon.types){
-                when(type.slot){
-                    1 -> type1.text = type.type.name
-                    2 -> type2.text = type.type.name
                 }
             }
         }
+    }
+
+    private fun setTypesVisibility() {
+        if (pokemon.types.size == 1) {
+            binding.typesTitle.text = context?.resources?.getString(R.string.type_title)
+            binding.verticalSeparator1.visibility = View.GONE
+            binding.type2Continer.visibility = View.GONE
+        } else
+            binding.typesTitle.text = context?.resources?.getString(R.string.types_title)
     }
 
     private fun setListeners() {
@@ -166,7 +185,7 @@ class PokeDetailFragment: Fragment() {
         }
     }
 
-    private fun prepareBackgroundColors() {
+    /*private fun prepareBackgroundColors() {
         colorPairList.add(Pair("black",
             listOf(context?.resources?.getColor(R.color.primary_black_pokemon, activity?.theme),
                 context?.resources?.getColor(R.color.black, activity?.theme))))
@@ -197,7 +216,7 @@ class PokeDetailFragment: Fragment() {
         colorPairList.add(Pair("white",
             listOf(context?.resources?.getColor(R.color.white, activity?.theme),
                 context?.resources?.getColor(R.color.white, activity?.theme))))
-    }
+    }*/
 
     private fun setPokemonAbilities() {
         var hasHiddenAbility = false
