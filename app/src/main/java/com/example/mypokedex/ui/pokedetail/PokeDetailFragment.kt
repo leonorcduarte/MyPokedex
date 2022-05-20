@@ -84,7 +84,7 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun setPokemonFlavorEntry() {
-        var flavorDesc = "N/A"
+        val flavorDesc: String
         for (flavor: FlavorText in pokemonSpecies.flavor_text_entries){
             if (flavor.version.name == "red"){
                 flavorDesc = flavor.flavor_text

@@ -35,12 +35,11 @@ class BaseActivity : AppCompatActivity() {
     private fun initNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        /*navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id){
-                R.id.warningListFragment -> toolbar.title = getString(R.string.main_presentation_title)
-                R.id.presentationFragment -> toolbar.title = getString(R.string.app_name)
-                R.id.forecastFragment -> toolbar.title = getString(R.string.forecast_title)
+                R.id.pokeListFragment -> binding.mainToolbar.title = getString(R.string.app_name)
+                R.id.pokeDetailFragment -> binding.mainToolbar.title = getString(R.string.detail)
             }
-        }*/
+        }
     }
 }
