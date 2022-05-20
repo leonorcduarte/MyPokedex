@@ -14,4 +14,24 @@
     <color name="light_gray">#6A6A6A</color>
     <color name="basic_blue">#3563ac</color>
     <color name="yellow">#ffcb05</color>
+
+    <!--Pokemon colors-->
+    <color name="black_pokemon">#a9a9a9</color>
+    <color name="primary_blue_pokemon">#d1e4ff</color>
+    <color name="secondary_blue_pokemon">#3d8bff</color>
+    <color name="primary_brown_pokemon">#eedd82</color>
+    <color name="secondary_brown_pokemon">#b8860b</color>
+    <color name="primary_gray_pokemon">#d3d3d3</color>
+    <color name="secondary_gray_pokemon">#696969</color>
+    <color name="primary_green_pokemon">#deffde</color>
+    <color name="secondary_green_pokemon">#228b22</color>
+    <color name="primary_pink_pokemon">#ffe4e1</color>
+    <color name="secondary_pink_pokemon">#db7093</color>
+    <color name="primary_purple_pokemon">#c5badb</color>
+    <color name="secondary_purple_pokemon">#6a5acd</color>
+    <color name="primary_red_pokemon">#ffd1d1</color>
+    <color name="secondary_red_pokemon">#ff6347</color>
+    <color name="primary_yellow_pokemon">#fffacd</color>
+    <color name="secondary_yellow_pokemon">#ffd700</color>
+
 </resources>

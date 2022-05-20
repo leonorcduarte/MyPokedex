@@ -11,35 +11,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:background="@color/primary_green_pokemon">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/round_corners_background"
+                android:layout_margin="8dp"
+                android:elevation="5dp"
+                android:backgroundTint="@color/secondary_green_pokemon">
 
             <TextView
                 android:id="@+id/flavor_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="A strange seed was planted on its back at birth.\nThe plant sprouts and grows with this POKéMON."
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:lineSpacingExtra="3sp"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"/>
-
-            <TextView
-                android:id="@+id/flavor_version"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/red_version"
-                android:textColor="@color/light_gray"
-                android:textSize="12sp"
-                android:layout_gravity="center"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_item"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="130dp"
                 android:backgroundTint="@color/white"
                 app:cardCornerRadius="8dp"
                 android:layout_margin="8dp">
@@ -55,7 +55,9 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_margin="8dp">
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp">
 
                     <TextView
                         android:id="@+id/poke_id"
@@ -64,8 +66,7 @@
                         android:gravity="center"
                         android:textSize="20sp"
                         android:textColor="@color/dark_gray"
-                        android:text="#001"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="8dp"/>
 
                     <TextView
                         android:id="@+id/poke_name"
@@ -73,7 +74,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/poke_id"
                         android:gravity="center"
-                        android:text="balbasaur"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -82,22 +82,34 @@
                         android:id="@+id/poke_height"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_below="@id/poke_shape"
                         android:layout_marginStart="8dp"
-                        android:text="height: 5"
                         android:textColor="@color/light_gray"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/poke_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_below="@id/poke_shape"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="8dp"
-                        android:text="weight: 7"
+                        android:layout_marginStart="8dp"
                         android:textColor="@color/light_gray"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/poke_shape"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/poke_name"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
 
@@ -118,6 +130,113 @@
                 </RelativeLayout>
             </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:background="@drawable/bottom_sheet_background"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/abilities_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/abilities_title"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ability_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textStyle="italic"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/abilities_title"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="5dp"/>
+
+                <View
+                    android:id="@+id/vertical_separator"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintStart_toEndOf="@id/ability_1"
+                    app:layout_constraintTop_toBottomOf="@id/abilities_title"
+                    app:layout_constraintEnd_toStartOf="@id/ability_2"
+                    android:background="@color/dark_gray"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/ability_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textStyle="italic"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/abilities_title"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="5dp"/>
+
+                <View
+                    android:id="@+id/horizontal_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ability_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/dark_gray"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/hidden_ability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textStyle="italic"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/horizontal_separator"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="5dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/inverted_bottom_sheet_background"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/evolution_chain_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/evolution_chain_title"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="17sp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
