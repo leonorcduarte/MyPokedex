@@ -21,6 +21,8 @@ constructor(
     private val pokemonDetailRepository: PokemonDetailRepository
 ): ViewModel() {
 
+    var firsLoading = true
+
     private val _pokemonResponse: MutableLiveData<Resource<PokemonResponse>> = MutableLiveData()
     val pokemonList: LiveData<Resource<PokemonResponse>>
         get() = _pokemonResponse

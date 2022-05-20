@@ -33,7 +33,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private var limit = 10
     private var offset = 0
     private var adapterPosition = 0
-    private var firsLoading = true
+    //private var firsLoading = true
     private var goToDetail = false
 
     private var adapter: PokemonListAdapter? = null
@@ -55,11 +55,15 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
         initAdapter()
 
-        viewModel.getPokemonList(limit, offset)
+        if (viewModel.firsLoading) {
 
-        pokemonListObservers()
+            viewModel.getPokemonList(limit, offset)
+            viewModel.firsLoading = false
+        }
 
-        setScrollListener()
+            pokemonListObservers()
+
+            setScrollListener()
     }
 
     private fun setScrollListener() {
@@ -125,15 +129,17 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         viewModel.pokemonList.observe(viewLifecycleOwner, Observer { resource ->
             when(resource.status){
                 Status.SUCCESS -> {
-                    displayLoading(false)
+                    displayLoading(true)
+                    listVisibility(false)
                     updateAdapter(resource.data)
                 }
                 Status.ERROR -> {
-                    displayLoading(false)
+                    displayLoading(true)
+                    listVisibility(true)
                     displayError(resource.message)
                 }
                 Status.LOADING -> {
-                    displayLoading(true)
+                    displayLoading(false)
                 }
             }
         })
@@ -144,10 +150,9 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
             when(resource.status){
                 Status.SUCCESS -> {
                     if (goToDetail){
+                        listVisibility(true)
                         resource.data?.id?.let { viewModel.getPokemonSpecies(it) }
                         pokemonSpeciesObservers(resource.data)
-                        //displayLoading(false)
-                        //openDetail(resource.data)
                     } else {
                         resource.data?.sprites?.let {
                             pokemonList[adapterPosition].image = it.front_default
@@ -156,10 +161,14 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
                     }
                 }
                 Status.ERROR -> {
+                    listVisibility(false)
                     displayError(resource.message)
                 }
                 Status.LOADING -> {
-                    displayLoading(true)
+                    if (goToDetail) {
+                        listVisibility(true)
+                        displayLoading(false)
+                    }
                 }
             }
         })
@@ -169,35 +178,27 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         viewModel.pokemonSpecies.observe(viewLifecycleOwner, Observer { resource ->
             when(resource.status){
                 Status.SUCCESS -> {
-                    displayLoading(false)
+                    displayLoading(true)
                     openDetail(pokemon, resource?.data)
                 }
                 Status.ERROR -> {
                     displayError(resource.message)
                 }
                 Status.LOADING -> {
-                    displayLoading(true)
+                    displayLoading(false)
                 }
             }
         })
     }
 
     private fun displayLoading(isDisplayed: Boolean){
-        if (isDisplayed && (firsLoading || goToDetail)){
-            firsLoading = false
-            binding.loading.visibility = View.VISIBLE
-            binding.pokemonList.visibility = View.GONE
-            if (goToDetail)
-                binding.dialog.visibility = View.GONE
-        }else{
-            if (!goToDetail) {
-                binding.loading.visibility = View.GONE
-                binding.dialog.visibility = View.VISIBLE
-                binding.pokemonList.visibility = View.VISIBLE
-            }
-        }
+        binding.loading.visibility = if(isDisplayed) View.GONE else View.VISIBLE
     }
 
+    private fun listVisibility(hide: Boolean){
+        binding.pokemonList.visibility = if (hide) View.GONE else View.VISIBLE
+        binding.dialog.visibility = if (hide) View.GONE else View.VISIBLE
+    }
     private fun displayError(message: String?){
         if (message != null){
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
