@@ -16,6 +16,7 @@ import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
 import com.example.mypokedex.data.model.secondarymodels.Abilities
 import com.example.mypokedex.data.model.secondarymodels.FlavorText
+import com.example.mypokedex.data.model.secondarymodels.Type
 import com.example.mypokedex.databinding.PokeDetailFragmentLayoutBinding
 import com.example.mypokedex.ui.pokedetail.adapters.EvolutionChainAdapter
 import com.example.mypokedex.util.Status
@@ -32,6 +33,7 @@ class PokeDetailFragment: Fragment() {
     private lateinit var pokemonSpecies: PokemonSpecies
 
     private val colorPairList = ArrayList<Pair<String, List<Int?>>>()
+    private lateinit var backgroundColorPair: Pair<String, List<Int?>>
     private val evolutionChainList = arrayListOf<String>()
     private var isEvolutionExpanded = false
     private var infoAlreadyExists = false
@@ -72,7 +74,26 @@ class PokeDetailFragment: Fragment() {
     private fun populateViews() {
         setPokemonFlavorEntry()
         setPokemonBaseInfo()
+        setPokemonTypes()
         setPokemonAbilities()
+    }
+
+    private fun setPokemonTypes() {
+        binding.apply {
+            if (pokemon.types.size == 1) {
+                typesTitle.text = context?.resources?.getString(R.string.type_title)
+                verticalSeparator1.visibility = View.GONE
+                type2.visibility = View.GONE
+            } else
+                typesTitle.text = context?.resources?.getString(R.string.types_title)
+
+            for(type: Type in pokemon.types){
+                when(type.slot){
+                    1 -> type1.text = type.type.name
+                    2 -> type2.text = type.type.name
+                }
+            }
+        }
     }
 
     private fun setListeners() {
@@ -102,7 +123,7 @@ class PokeDetailFragment: Fragment() {
 
     private fun initEvolutionAdapter() {
         binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val adapter = EvolutionChainAdapter(evolutionChainList)
+        val adapter = EvolutionChainAdapter(evolutionChainList, backgroundColorPair)
         binding.evolutionChainList.adapter = adapter
     }
 
@@ -135,6 +156,7 @@ class PokeDetailFragment: Fragment() {
     private fun setBackgroundColor() {
         for (colorPair: Pair<String, List<Int?>> in colorPairList){
             if(pokemonSpecies.color.name == colorPair.first){
+                backgroundColorPair = colorPair
                 colorPair.second[0]?.let { binding.mainLayout.setBackgroundColor(it) }
                 colorPair.second[1]?.let { binding.flavorContainer.background.setTint(it) }
             }
