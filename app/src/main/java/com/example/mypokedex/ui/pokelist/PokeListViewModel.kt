@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.mypokedex.data.model.mainmodels.Pokemon
 import com.example.mypokedex.data.model.mainmodels.PokemonResponse
 import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
+import com.example.mypokedex.data.model.secondarymodels.BaseModel
 import com.example.mypokedex.repository.PokemonDetailRepository
 import com.example.mypokedex.repository.PokemonListRepository
 import com.example.mypokedex.util.Resource
@@ -22,9 +23,13 @@ constructor(
 ): ViewModel() {
 
     var firsLoading = true
+    var limit = 10
+    var offset = 0
+
+    var pokemonList: MutableList<BaseModel> = mutableListOf()
 
     private val _pokemonResponse: MutableLiveData<Resource<PokemonResponse>> = MutableLiveData()
-    val pokemonList: LiveData<Resource<PokemonResponse>>
+    val pokemonResponseList: LiveData<Resource<PokemonResponse>>
         get() = _pokemonResponse
 
     private val _pokemonDetail: MutableLiveData<Resource<Pokemon>> = MutableLiveData()

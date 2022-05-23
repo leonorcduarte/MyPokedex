@@ -1,5 +1,6 @@
 package com.example.mypokedex.ui.pokelist
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
@@ -31,14 +33,14 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private lateinit var binding: PokeListFragmentLayoutBinding
     private lateinit var viewModel: PokeListViewModel
 
-    private var limit = 10
-    private var offset = 0
+    //private var limit = 10
+    //private var offset = 0
     private var adapterPosition = 0
     private var goToDetail = false
     private var updateList = false
 
     private var adapter: PokemonListAdapter? = null
-    private var pokemonList: MutableList<BaseModel> = mutableListOf()
+    //private var pokemonList: MutableList<BaseModel> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +53,11 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         return binding.root
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Toast.makeText(activity, "onConfigurationChanged", Toast.LENGTH_SHORT).show()
+    }
+
     private fun initScreen() {
         viewModel = ViewModelProvider(this)[PokeListViewModel::class.java]
 
@@ -58,13 +65,15 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
         if (viewModel.firsLoading) {
 
-            viewModel.getPokemonList(limit, offset)
+            viewModel.getPokemonList(viewModel.limit, viewModel.offset)
             viewModel.firsLoading = false
+            pokemonListObservers()
+        } else{
+            updateAdapter(viewModel.pokemonResponseList.value?.data)
+            listVisibility(false)
         }
 
-            pokemonListObservers()
-
-            setScrollListener()
+        setScrollListener()
     }
 
     private fun setScrollListener() {
@@ -77,29 +86,35 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
                 if (layoutManager is LinearLayoutManager)
                     lastPositionVisible = layoutManager.findLastVisibleItemPosition()
 
-                if (newState == SCROLL_STATE_IDLE && lastPositionVisible == pokemonList.size - 1)
+                if (newState == SCROLL_STATE_IDLE && lastPositionVisible == viewModel.pokemonList.size - 1)
                     getPokemonList()
             }
         })
     }
 
     private fun getPokemonList() {
-        offset += limit
+        viewModel.offset += viewModel.limit
         updateList = true
-        viewModel.getPokemonList(limit, offset)
+        viewModel.getPokemonList(viewModel.limit, viewModel.offset)
     }
 
     private fun initAdapter() {
         binding.pokemonList.visibility = View.GONE
-        binding.pokemonList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        adapter = context?.let { PokemonListAdapter(pokemonList, this, it) }
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+            binding.pokemonList.layoutManager = GridLayoutManager(activity, 2)
+        else
+            binding.pokemonList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        adapter = context?.let { PokemonListAdapter(viewModel.pokemonList, this, it) }
         binding.pokemonList.adapter = adapter
     }
 
     private fun updateAdapter(pokemons: PokemonResponse?){
         if (pokemons != null) {
-            pokemonList.addAll(pokemons.results)
-            adapter?.updateList(pokemonList, offset)
+            if (viewModel.offset > 0)
+                viewModel.pokemonList.addAll(pokemons.results)
+            else
+                viewModel.pokemonList = pokemons.results as MutableList<BaseModel>
+            adapter?.updateList(viewModel.pokemonList, viewModel.offset)
         }
     }
 
@@ -128,7 +143,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     }
 
     private fun pokemonListObservers() {
-        viewModel.pokemonList.observe(viewLifecycleOwner, Observer { resource ->
+        viewModel.pokemonResponseList.observe(viewLifecycleOwner, Observer { resource ->
             when(resource.status){
                 Status.SUCCESS -> {
                     displayLoading(true)
@@ -157,8 +172,8 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
                         pokemonSpeciesObservers(resource.data)
                     } else {
                         resource.data?.sprites?.let {
-                            pokemonList[adapterPosition].image = it.front_default
-                            adapter?.updateListItem(pokemonList, adapterPosition)
+                            viewModel.pokemonList[adapterPosition].image = it.front_default
+                            adapter?.updateListItem(viewModel.pokemonList, adapterPosition)
                         }
                     }
                 }
