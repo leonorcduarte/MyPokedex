@@ -167,15 +167,11 @@
                         android:id="@+id/arrow"
                         android:layout_width="20dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="8dp"
                         android:src="@drawable/arrow_ic"
-                        android:text="@string/evolution_chain_title"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/evolution_chain_title"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -242,8 +238,7 @@
                         android:layout_gravity="center"
                         android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:gravity="center"
-                        android:text="grass"/>
+                        android:gravity="center"/>
                 </LinearLayout>
 
                 <View
@@ -275,8 +270,7 @@
                     android:layout_gravity="center"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:gravity="center"
-                    android:text="poison"/>
+                    android:gravity="center"/>
 
                 </LinearLayout>
 
