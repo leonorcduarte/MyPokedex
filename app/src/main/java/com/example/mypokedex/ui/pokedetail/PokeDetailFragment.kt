@@ -19,6 +19,7 @@ import com.example.mypokedex.data.model.secondarymodels.FlavorText
 import com.example.mypokedex.data.model.secondarymodels.Type
 import com.example.mypokedex.databinding.PokeDetailFragmentLayoutBinding
 import com.example.mypokedex.ui.pokedetail.adapters.EvolutionChainAdapter
+import com.example.mypokedex.util.Constants
 import com.example.mypokedex.util.PokemonColorUtils
 import com.example.mypokedex.util.Status
 import com.example.mypokedex.util.StringUtils
@@ -55,15 +56,14 @@ class PokeDetailFragment: Fragment() {
     private fun initScreen() {
         viewModel = ViewModelProvider(this)[PokeDetailViewModel::class.java]
 
-        arguments?.getSerializable("pokemonDetail")?.let {
+        arguments?.getSerializable(Constants.POKEMON_DETAIL)?.let {
             pokemon = it as Pokemon
         }
 
-        arguments?.getSerializable("pokemonSpecies")?.let {
+        arguments?.getSerializable(Constants.POKEMON_SPECIES)?.let {
             pokemonSpecies = it as PokemonSpecies
         }
 
-        //prepareBackgroundColors()
         colorPairList = PokemonColorUtils.getBackgroundColors(activity)
         typeColorPairList = PokemonColorUtils.getTypeColors(activity)
 
@@ -184,39 +184,6 @@ class PokeDetailFragment: Fragment() {
             }
         }
     }
-
-    /*private fun prepareBackgroundColors() {
-        colorPairList.add(Pair("black",
-            listOf(context?.resources?.getColor(R.color.primary_black_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.black, activity?.theme))))
-        colorPairList.add(Pair("blue",
-            listOf(context?.resources?.getColor(R.color.primary_blue_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_blue_pokemon, activity?.theme))))
-        colorPairList.add(Pair("brown",
-            listOf(context?.resources?.getColor(R.color.primary_brown_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_brown_pokemon, activity?.theme))))
-        colorPairList.add(Pair("gray",
-            listOf(context?.resources?.getColor(R.color.primary_gray_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_gray_pokemon, activity?.theme))))
-        colorPairList.add(Pair("green",
-            listOf(context?.resources?.getColor(R.color.primary_green_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_green_pokemon, activity?.theme))))
-        colorPairList.add(Pair("pink",
-            listOf(context?.resources?.getColor(R.color.primary_pink_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_pink_pokemon, activity?.theme))))
-        colorPairList.add(Pair("purple",
-            listOf(context?.resources?.getColor(R.color.primary_purple_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_purple_pokemon, activity?.theme))))
-        colorPairList.add(Pair("red",
-            listOf(context?.resources?.getColor(R.color.primary_red_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_red_pokemon, activity?.theme))))
-        colorPairList.add(Pair("yellow",
-            listOf(context?.resources?.getColor(R.color.primary_yellow_pokemon, activity?.theme),
-                context?.resources?.getColor(R.color.secondary_yellow_pokemon, activity?.theme))))
-        colorPairList.add(Pair("white",
-            listOf(context?.resources?.getColor(R.color.white, activity?.theme),
-                context?.resources?.getColor(R.color.white, activity?.theme))))
-    }*/
 
     private fun setPokemonAbilities() {
         var hasHiddenAbility = false

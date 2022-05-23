@@ -21,6 +21,7 @@ import com.example.mypokedex.data.model.mainmodels.PokemonSpecies
 import com.example.mypokedex.data.model.secondarymodels.BaseModel
 import com.example.mypokedex.databinding.PokeListFragmentLayoutBinding
 import com.example.mypokedex.ui.pokelist.adapters.PokemonListAdapter
+import com.example.mypokedex.util.Constants
 import com.example.mypokedex.util.Status
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +34,6 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private var limit = 10
     private var offset = 0
     private var adapterPosition = 0
-    //private var firsLoading = true
     private var goToDetail = false
 
     private var adapter: PokemonListAdapter? = null
@@ -118,8 +118,8 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private fun openDetail(pokemon: Pokemon?, species: PokemonSpecies?) {
         goToDetail = false
         val bundle: Bundle = bundleOf()
-        bundle.putSerializable("pokemonDetail", pokemon)
-        bundle.putSerializable("pokemonSpecies", species)
+        bundle.putSerializable(Constants.POKEMON_DETAIL, pokemon)
+        bundle.putSerializable(Constants.POKEMON_SPECIES, species)
         if (pokemon != null){
             Navigation.findNavController(binding.root).navigate(R.id.pokeDetailFragment, bundle)
         }
@@ -199,6 +199,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         binding.pokemonList.visibility = if (hide) View.GONE else View.VISIBLE
         binding.dialog.visibility = if (hide) View.GONE else View.VISIBLE
     }
+
     private fun displayError(message: String?){
         if (message != null){
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
