@@ -100,7 +100,6 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         if (pokemons != null) {
             pokemonList.addAll(pokemons.results)
             adapter?.updateList(pokemonList, offset)
-            //binding.pokemonList.stopScroll()
         }
     }
 

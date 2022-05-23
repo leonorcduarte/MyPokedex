@@ -37,4 +37,8 @@ class EvolutionChainAdapter(
     }
 
     override fun getItemCount() = evolutionsList.size
+
+    fun setEvolutionChain(newEvolutionsList: List<String>){
+        evolutionsList = newEvolutionsList
+    }
 }

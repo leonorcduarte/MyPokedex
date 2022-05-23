@@ -31,6 +31,8 @@ class PokeDetailFragment: Fragment() {
     private lateinit var binding: PokeDetailFragmentLayoutBinding
     private lateinit var viewModel: PokeDetailViewModel
 
+    private lateinit var adapter: EvolutionChainAdapter
+
     private lateinit var pokemon: Pokemon
     private lateinit var pokemonSpecies: PokemonSpecies
 
@@ -38,8 +40,6 @@ class PokeDetailFragment: Fragment() {
     private var typeColorPairList = ArrayList<Pair<String, Int?>>()
     private lateinit var backgroundColorPair: Pair<String, List<Int?>>
     private val evolutionChainList = arrayListOf<String>()
-    private var isEvolutionExpanded = false
-    private var infoAlreadyExists = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +69,7 @@ class PokeDetailFragment: Fragment() {
 
         setBackgroundColor()
         setListeners()
+        initEvolutionAdapter()
         populateViews()
     }
 
@@ -81,6 +82,17 @@ class PokeDetailFragment: Fragment() {
         setPokemonBaseInfo()
         setPokemonTypes()
         setPokemonAbilities()
+        checkEvolutionChainStatus()
+    }
+
+    private fun checkEvolutionChainStatus() {
+        if(viewModel.isEvolutionExpanded){
+            binding.evolutionChainList.visibility = View.VISIBLE
+            binding.arrow.rotation = 180F
+            setEvolutionChain(viewModel.pokemonEvolutionChain.value?.data)
+            updateEvolutionAdapter()
+        }
+
     }
 
     private fun setPokemonTypes() {
@@ -120,30 +132,33 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun expandEvolutionChain() {
-        when(isEvolutionExpanded){
+        when(viewModel.isEvolutionExpanded){
             false -> {
-                if (!infoAlreadyExists){
+                if (!viewModel.infoAlreadyExists){
                     viewModel.getPokemonEvolutionChain(getEvolutionChainId())
                     pokemonEvolutionChainObservers()
                 }
                 binding.evolutionChainList.visibility = View.VISIBLE
                 binding.arrow.rotation = 180F
-                isEvolutionExpanded = true
+                viewModel.isEvolutionExpanded = true
             }
             true -> {
                 binding.evolutionChainList.visibility = View.GONE
                 binding.arrow.rotation = 0F
-                isEvolutionExpanded = false
+                viewModel.isEvolutionExpanded = false
             }
         }
     }
 
-
-
     private fun initEvolutionAdapter() {
         binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val adapter = EvolutionChainAdapter(evolutionChainList, backgroundColorPair)
+        adapter = EvolutionChainAdapter(evolutionChainList, backgroundColorPair)
         binding.evolutionChainList.adapter = adapter
+    }
+
+    private fun updateEvolutionAdapter(){
+        if (evolutionChainList.isNotEmpty())
+            adapter.setEvolutionChain(evolutionChainList)
     }
 
     private fun pokemonEvolutionChainObservers() {
@@ -151,9 +166,9 @@ class PokeDetailFragment: Fragment() {
            when(resource.status){
                Status.SUCCESS -> {
                    displayLoading(true)
-                   infoAlreadyExists = true
+                   viewModel.infoAlreadyExists = true
                    setEvolutionChain(resource.data)
-                   initEvolutionAdapter()
+                   updateEvolutionAdapter()
                }
                Status.ERROR -> {
                    displayLoading(true)
@@ -172,7 +187,6 @@ class PokeDetailFragment: Fragment() {
             if (evolutionChain.chain.evolves_to[0].evolves_to.isNotEmpty())
                 evolutionChainList.add(evolutionChain.chain.evolves_to[0].evolves_to[0].species.name)
         }
-
     }
 
     private fun setBackgroundColor() {

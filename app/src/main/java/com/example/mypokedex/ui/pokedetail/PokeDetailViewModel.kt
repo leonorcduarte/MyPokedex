@@ -20,6 +20,9 @@ class PokeDetailViewModel
     private val pokemonDetailRepository: PokemonDetailRepository
 ): ViewModel() {
 
+    var isEvolutionExpanded = false
+    var infoAlreadyExists = false
+
     private val _pokemonEvolutionChain: MutableLiveData<Resource<EvolutionChain>> = MutableLiveData()
     val pokemonEvolutionChain: LiveData<Resource<EvolutionChain>>
         get() = _pokemonEvolutionChain
