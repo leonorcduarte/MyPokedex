@@ -87,8 +87,10 @@ class PokemonListAdapter(
     }
 
     fun updateList(newPokeList: List<BaseModel>, position: Int){
+        val oldSize = pokeList.size
         pokeList = newPokeList
-        notifyItemInserted(position)
+        //notifyItemInserted(position)
+        notifyItemRangeInserted(position, oldSize)
     }
 
 }

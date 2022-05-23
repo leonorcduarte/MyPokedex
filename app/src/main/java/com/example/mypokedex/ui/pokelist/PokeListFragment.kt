@@ -35,6 +35,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private var offset = 0
     private var adapterPosition = 0
     private var goToDetail = false
+    private var updateList = false
 
     private var adapter: PokemonListAdapter? = null
     private var pokemonList: MutableList<BaseModel> = mutableListOf()
@@ -84,6 +85,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
     private fun getPokemonList() {
         offset += limit
+        updateList = true
         viewModel.getPokemonList(limit, offset)
     }
 
@@ -98,6 +100,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         if (pokemons != null) {
             pokemonList.addAll(pokemons.results)
             adapter?.updateList(pokemonList, offset)
+            //binding.pokemonList.stopScroll()
         }
     }
 
@@ -192,7 +195,10 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     }
 
     private fun displayLoading(isDisplayed: Boolean){
-        binding.loading.visibility = if(isDisplayed) View.GONE else View.VISIBLE
+        if (isDisplayed)
+            binding.loading.visibility = View.GONE
+        else if(!updateList)
+            binding.loading.visibility = View.VISIBLE
     }
 
     private fun listVisibility(hide: Boolean){
