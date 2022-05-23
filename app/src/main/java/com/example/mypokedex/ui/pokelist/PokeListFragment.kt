@@ -40,7 +40,6 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     private var updateList = false
 
     private var adapter: PokemonListAdapter? = null
-    //private var pokemonList: MutableList<BaseModel> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,7 +99,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
     private fun initAdapter() {
         binding.pokemonList.visibility = View.GONE
-        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
             binding.pokemonList.layoutManager = GridLayoutManager(activity, 2)
         else
             binding.pokemonList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -138,6 +137,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         bundle.putSerializable(Constants.POKEMON_DETAIL, pokemon)
         bundle.putSerializable(Constants.POKEMON_SPECIES, species)
         if (pokemon != null){
+            //listener.goToDetailFragment(bundle)
             Navigation.findNavController(binding.root).navigate(R.id.pokeDetailFragment, bundle)
         }
     }
