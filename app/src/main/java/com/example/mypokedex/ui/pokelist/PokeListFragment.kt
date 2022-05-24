@@ -52,11 +52,6 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         return binding.root
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        Toast.makeText(activity, "onConfigurationChanged", Toast.LENGTH_SHORT).show()
-    }
-
     private fun initScreen() {
         viewModel = ViewModelProvider(this)[PokeListViewModel::class.java]
 
@@ -101,7 +96,9 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
     private fun initAdapter() {
         binding.pokemonList.visibility = View.GONE
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            || (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) ==
+            Configuration.SCREENLAYOUT_SIZE_LARGE)
             binding.pokemonList.layoutManager = GridLayoutManager(activity, 2)
         else
             binding.pokemonList.layoutManager =

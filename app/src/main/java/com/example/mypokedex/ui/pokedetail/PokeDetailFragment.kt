@@ -154,7 +154,10 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun initEvolutionAdapter() {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            || (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) ==
+        Configuration.SCREENLAYOUT_SIZE_LARGE || (resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) ==
+            Configuration.SCREENLAYOUT_SIZE_XLARGE)
             binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         else
             binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
