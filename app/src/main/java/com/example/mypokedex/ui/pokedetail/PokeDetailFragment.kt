@@ -41,7 +41,7 @@ class PokeDetailFragment: Fragment() {
     private var colorPairList = ArrayList<Pair<String, List<Int?>>>()
     private var typeColorPairList = ArrayList<Pair<String, Int?>>()
     private lateinit var backgroundColorPair: Pair<String, List<Int?>>
-    private val evolutionChainList = arrayListOf<String>()
+    //private val evolutionChainList = arrayListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -157,13 +157,13 @@ class PokeDetailFragment: Fragment() {
             binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         else
             binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        adapter = EvolutionChainAdapter(evolutionChainList, backgroundColorPair)
+        adapter = EvolutionChainAdapter(viewModel.evolutionChainList, backgroundColorPair)
         binding.evolutionChainList.adapter = adapter
     }
 
     private fun updateEvolutionAdapter(){
-        if (evolutionChainList.isNotEmpty())
-            adapter.setEvolutionChain(evolutionChainList)
+        if (viewModel.evolutionChainList.isNotEmpty())
+            adapter.setEvolutionChain(viewModel.evolutionChainList)
     }
 
     private fun pokemonEvolutionChainObservers() {
@@ -186,11 +186,11 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun setEvolutionChain(evolutionChain: EvolutionChain?) {
-        if (evolutionChain != null){
-            evolutionChainList.add(evolutionChain.chain.species.name)
-            evolutionChainList.add(evolutionChain.chain.evolves_to[0].species.name)
+        if (evolutionChain != null && viewModel.evolutionChainList.isEmpty()){
+            viewModel.evolutionChainList.add(evolutionChain.chain.species.name)
+            viewModel.evolutionChainList.add(evolutionChain.chain.evolves_to[0].species.name)
             if (evolutionChain.chain.evolves_to[0].evolves_to.isNotEmpty())
-                evolutionChainList.add(evolutionChain.chain.evolves_to[0].evolves_to[0].species.name)
+                viewModel.evolutionChainList.add(evolutionChain.chain.evolves_to[0].evolves_to[0].species.name)
         }
     }
 
