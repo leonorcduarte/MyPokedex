@@ -234,14 +234,16 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun setPokemonFlavorEntry() {
-        val flavorDesc: String
+        var flavorDesc = ""
         for (flavor: FlavorText in pokemonSpecies.flavor_text_entries){
             if (flavor.version.name == "red"){
                 flavorDesc = flavor.flavor_text
-                binding.flavorText.text = flavorDesc.replace("\n", " ").replace("\\f", "\n")
-                return
             }
         }
+        if(flavorDesc.isNotEmpty())
+            binding.flavorText.text = flavorDesc.replace("\n", " ").replace("\\f", "\n")
+        else
+            binding.flavorContainer.visibility = View.GONE
     }
 
     private fun setPokemonBaseInfo(){
