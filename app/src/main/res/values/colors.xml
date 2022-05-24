@@ -7,4 +7,52 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="app_red">#ef5350</color>
+    <color name="secondary_app_red">#F18A88</color>
+    <color name="dark_gray">#393939</color>
+    <color name="light_gray">#6A6A6A</color>
+    <color name="basic_blue">#3563ac</color>
+    <color name="yellow">#ffcb05</color>
+
+    <!--Pokemon colors-->
+    <color name="primary_black_pokemon">#a9a9a9</color>
+    <color name="primary_blue_pokemon">#d1e4ff</color>
+    <color name="secondary_blue_pokemon">#3d8bff</color>
+    <color name="primary_brown_pokemon">#eedd82</color>
+    <color name="secondary_brown_pokemon">#b8860b</color>
+    <color name="primary_gray_pokemon">#d3d3d3</color>
+    <color name="secondary_gray_pokemon">#696969</color>
+    <color name="primary_green_pokemon">#deffde</color>
+    <color name="secondary_green_pokemon">#228b22</color>
+    <color name="primary_pink_pokemon">#ffe4e1</color>
+    <color name="secondary_pink_pokemon">#db7093</color>
+    <color name="primary_purple_pokemon">#c5badb</color>
+    <color name="secondary_purple_pokemon">#6a5acd</color>
+    <color name="primary_red_pokemon">#ffd1d1</color>
+    <color name="secondary_red_pokemon">#ff6347</color>
+    <color name="primary_yellow_pokemon">#fffacd</color>
+    <color name="secondary_yellow_pokemon">#ffd700</color>
+
+    <!--Pokemon Type Colors-->
+    <color name="normal_type_gray">#aaaa99</color>
+    <color name="fire_type_red">#ff4422</color>
+    <color name="water_type_blue">#3399ff</color>
+    <color name="electric_type_yellow">#ffcc33</color>
+    <color name="grass_type_green">#77cc55</color>
+    <color name="ice_type_blue">#66ccff</color>
+    <color name="fighting_type_red">#bb5544</color>
+    <color name="poison_type_purple">#aa5599</color>
+    <color name="ground_type_yellow">#ddbb55</color>
+    <color name="flying_type_purple">#8899ff</color>
+    <color name="psychic_type_pink">#ff5599</color>
+    <color name="bug_type_green">#aabb22</color>
+    <color name="rock_type_yellow">#bbaa66</color>
+    <color name="ghost_type_purple">#6666bb</color>
+    <color name="dragon_type_purple">#7766ee</color>
+    <color name="dark_type_brown">#775544</color>
+    <color name="steel_type_gray">#aaaabb</color>
+    <color name="fairy_type_pink">#ee99ee</color>
+
+
 </resources>

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">My Pokédex</string>
+    <string name="detail">Pokémon Detail</string>
+    <string name="id_code">#%1$s</string>
+    <string name="catchy_phrase">Who\'s that Pokémon</string>
+    <string name="tutorial_phrase">Click to find out</string>
+    <string name="height_label">Height: %1$s</string>
+    <string name="weight_label">Weight: %1$s</string>
+    <string name="red_version">(Version: red)</string>
+    <string name="types_title">Types</string>
+    <string name="type_title">Type</string>
+    <string name="abilities_title">Abilities</string>
+    <string name="hidden_ability_label">%1$s (hidden)</string>
+    <string name="evolution_chain_title">Evolution Chain</string>
+    <string name="alert">Alert</string>
+    <string name="unknown">Unknown Error</string>
 </resources>
