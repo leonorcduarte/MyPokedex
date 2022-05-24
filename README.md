@@ -9,8 +9,8 @@ MyPokedex is built on MVVM (model-view-viewmodel), which allows you to separate 
 ### Splash Screen
 ![SplahScreen](/screenshots/Splash.png)
 ### Pokémon List Screen
-![ListScreen](/screenshots/List.png) | ![ListScreenWithImage](/screenshots/ListWithPokémon.png)
+![ListScreen](/screenshots/List.png) ![ListScreenWithImage](/screenshots/ListWithPokémon.png)
 ### Pokémon Detail Screen
-![Detail](/screenshots/Detail.png) | ![Detail](/screenshots/DetailWithEvolutionChain.png)
+![Detail](/screenshots/Detail.png) ![Detail](/screenshots/DetailWithEvolutionChain.png)
 #### Pokémon Detail Screen on Large screen
 ![Detail](/screenshots/DetailOnLargeScreen.png)
