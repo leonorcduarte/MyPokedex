@@ -157,7 +157,7 @@ class PokeDetailFragment: Fragment() {
             binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         else
             binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        adapter = EvolutionChainAdapter(viewModel.evolutionChainList, backgroundColorPair)
+        adapter = EvolutionChainAdapter(viewModel.evolutionChainList, backgroundColorPair, activity)
         binding.evolutionChainList.adapter = adapter
     }
 

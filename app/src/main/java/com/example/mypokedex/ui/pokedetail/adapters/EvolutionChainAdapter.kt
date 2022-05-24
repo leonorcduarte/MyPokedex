@@ -1,5 +1,6 @@
 package com.example.mypokedex.ui.pokedetail.adapters
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,8 @@ import com.example.mypokedex.R
 
 class EvolutionChainAdapter(
     private var evolutionsList: List<String>,
-    private var colorPair: Pair<String, List<Int?>>
+    private var colorPair: Pair<String, List<Int?>>,
+    private var activity: Activity?
 ): RecyclerView.Adapter<EvolutionChainAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +30,10 @@ class EvolutionChainAdapter(
             arrow.visibility = if (position == itemCount - 1) View.GONE else View.VISIBLE
 
             colorPair.second[0]?.let { nameContainer.background.setTint(it) }
-            colorPair.second[1]?.let { arrow.setColorFilter(it) }
+            if (colorPair.second[1] == activity?.resources?.getColor(R.color.white, activity?.theme))
+                arrow.setColorFilter(R.color.black)
+            else
+                colorPair.second[1]?.let { arrow.setColorFilter(it) }
         }
     }
 
