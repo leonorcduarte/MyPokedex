@@ -188,7 +188,8 @@ class PokeDetailFragment: Fragment() {
     private fun setEvolutionChain(evolutionChain: EvolutionChain?) {
         if (evolutionChain != null && viewModel.evolutionChainList.isEmpty()){
             viewModel.evolutionChainList.add(evolutionChain.chain.species.name)
-            viewModel.evolutionChainList.add(evolutionChain.chain.evolves_to[0].species.name)
+            if (evolutionChain.chain.evolves_to.isNotEmpty())
+                viewModel.evolutionChainList.add(evolutionChain.chain.evolves_to[0].species.name)
             if (evolutionChain.chain.evolves_to[0].evolves_to.isNotEmpty())
                 viewModel.evolutionChainList.add(evolutionChain.chain.evolves_to[0].evolves_to[0].species.name)
         }
