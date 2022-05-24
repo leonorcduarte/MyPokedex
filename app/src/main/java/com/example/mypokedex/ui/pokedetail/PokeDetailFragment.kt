@@ -1,11 +1,13 @@
 package com.example.mypokedex.ui.pokedetail
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -41,7 +43,6 @@ class PokeDetailFragment: Fragment() {
     private var colorPairList = ArrayList<Pair<String, List<Int?>>>()
     private var typeColorPairList = ArrayList<Pair<String, Int?>>()
     private lateinit var backgroundColorPair: Pair<String, List<Int?>>
-    //private val evolutionChainList = arrayListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -177,6 +178,7 @@ class PokeDetailFragment: Fragment() {
                }
                Status.ERROR -> {
                    displayLoading(true)
+                   displayError(resource.message)
                }
                Status.LOADING -> {
                    displayLoading(false)
@@ -265,5 +267,17 @@ class PokeDetailFragment: Fragment() {
 
     private fun displayLoading(isDisplayed: Boolean){
         binding.loading.visibility = if(isDisplayed) View.GONE else View.VISIBLE
+    }
+
+    private fun displayError(message: String?) {
+        val dialog = AlertDialog.Builder(activity)
+        dialog.setTitle(resources.getString(R.string.alert))
+        dialog.setCancelable(true)
+        if (message != null) {
+            dialog.setMessage(message)
+        } else {
+            dialog.setMessage(resources.getString(R.string.unknown))
+        }
+        dialog.show()
     }
 }

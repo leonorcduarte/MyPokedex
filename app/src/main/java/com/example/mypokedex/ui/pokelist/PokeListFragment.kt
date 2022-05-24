@@ -1,5 +1,6 @@
 package com.example.mypokedex.ui.pokelist
 
+import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,7 +45,8 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.poke_list_fragment_layout, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.poke_list_fragment_layout, container, false)
 
         initScreen()
         return binding.root
@@ -64,7 +66,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
             viewModel.getPokemonList(viewModel.limit, viewModel.offset)
             viewModel.firsLoading = false
-        } else{
+        } else {
             updateAdapter(viewModel.pokemonList)
             listVisibility(false)
         }
@@ -76,7 +78,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
     private fun setScrollListener() {
         var lastPositionVisible = 0
-        binding.pokemonList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.pokemonList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
@@ -102,19 +104,18 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
             binding.pokemonList.layoutManager = GridLayoutManager(activity, 2)
         else
-            binding.pokemonList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            binding.pokemonList.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = context?.let { PokemonListAdapter(viewModel.pokemonList, this, it) }
         binding.pokemonList.adapter = adapter
     }
 
-    private fun updateAdapter(pokemons: List<BaseModel>){
-        //if (pokemons != null) {
-            if (viewModel.offset > 0 && viewModel.pokemonList.size -10 < viewModel.offset)
-                viewModel.pokemonList.addAll(pokemons)
-            else if(viewModel.offset == 0)
-                viewModel.pokemonList = pokemons as MutableList<BaseModel>
-            adapter?.updateList(viewModel.pokemonList, viewModel.offset)
-        //}
+    private fun updateAdapter(pokemons: List<BaseModel>) {
+        if (viewModel.offset > 0 && viewModel.pokemonList.size - 10 < viewModel.offset)
+            viewModel.pokemonList.addAll(pokemons)
+        else if (viewModel.offset == 0)
+            viewModel.pokemonList = pokemons as MutableList<BaseModel>
+        adapter?.updateList(viewModel.pokemonList, viewModel.offset)
     }
 
     override fun onPokeBallClick(position: Int, pokemonName: String) {
@@ -136,14 +137,14 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         val bundle: Bundle = bundleOf()
         bundle.putSerializable(Constants.POKEMON_DETAIL, pokemon)
         bundle.putSerializable(Constants.POKEMON_SPECIES, species)
-        if (pokemon != null){
+        if (pokemon != null) {
             Navigation.findNavController(binding.root).navigate(R.id.pokeDetailFragment, bundle)
         }
     }
 
     private fun pokemonListObservers() {
         viewModel.pokemonResponseList.observe(viewLifecycleOwner, Observer { resource ->
-            when(resource.status){
+            when (resource.status) {
                 Status.SUCCESS -> {
                     displayLoading(true)
                     listVisibility(false)
@@ -163,9 +164,9 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
     private fun pokemonDetailObservers() {
         viewModel.pokemonDetail.observe(viewLifecycleOwner, Observer { resource ->
-            when(resource.status){
+            when (resource.status) {
                 Status.SUCCESS -> {
-                    if (goToDetail){
+                    if (goToDetail) {
                         listVisibility(true)
                         resource.data?.id?.let { viewModel.getPokemonSpecies(it) }
                         pokemonSpeciesObservers(resource.data)
@@ -192,7 +193,7 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
 
     private fun pokemonSpeciesObservers(pokemon: Pokemon?) {
         viewModel.pokemonSpecies.observe(viewLifecycleOwner, Observer { resource ->
-            when(resource.status){
+            when (resource.status) {
                 Status.SUCCESS -> {
                     displayLoading(true)
                     openDetail(pokemon, resource?.data)
@@ -207,24 +208,27 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
         })
     }
 
-    private fun displayLoading(isDisplayed: Boolean){
+    private fun displayLoading(isDisplayed: Boolean) {
         if (isDisplayed)
             binding.loading.visibility = View.GONE
-        else if(!updateList)
+        else if (!updateList)
             binding.loading.visibility = View.VISIBLE
     }
 
-    private fun listVisibility(hide: Boolean){
+    private fun listVisibility(hide: Boolean) {
         binding.pokemonList.visibility = if (hide) View.GONE else View.VISIBLE
         binding.dialog.visibility = if (hide) View.GONE else View.VISIBLE
     }
 
-    private fun displayError(message: String?){
-        if (message != null){
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-        } else{
-            TODO(" text.text = Unknown error")
+    private fun displayError(message: String?) {
+        val dialog = AlertDialog.Builder(activity)
+        dialog.setTitle(resources.getString(R.string.alert))
+        dialog.setCancelable(true)
+        if (message != null) {
+            dialog.setMessage(message)
+        } else {
+            dialog.setMessage(resources.getString(R.string.unknown))
         }
-
+        dialog.show()
     }
 }
