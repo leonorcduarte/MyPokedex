@@ -40,5 +40,6 @@ class EvolutionChainAdapter(
 
     fun setEvolutionChain(newEvolutionsList: List<String>){
         evolutionsList = newEvolutionsList
+        notifyItemRangeInserted(0, evolutionsList.size-1)
     }
 }

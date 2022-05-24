@@ -1,6 +1,7 @@
 package com.example.mypokedex.ui.pokedetail
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -152,7 +153,10 @@ class PokeDetailFragment: Fragment() {
     }
 
     private fun initEvolutionAdapter() {
-        binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+            binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        else
+            binding.evolutionChainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = EvolutionChainAdapter(evolutionChainList, backgroundColorPair)
         binding.evolutionChainList.adapter = adapter
     }

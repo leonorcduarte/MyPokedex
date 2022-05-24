@@ -11,7 +11,7 @@
         <LinearLayout
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/primary_green_pokemon"
             android:paddingBottom="20dp">
@@ -52,7 +52,9 @@
                     android:layout_height="130dp"
                     android:backgroundTint="@color/white"
                     app:cardCornerRadius="8dp"
-                    android:layout_margin="8dp">
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_gravity="center_vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -135,121 +137,129 @@
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
                                 android:layout_centerInParent="true"
-                                android:contentDescription="pokemon_image"/>
+                                android:contentDescription="pokemon_image" />
 
                         </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="5dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="5dp"
-                    android:background="@drawable/bottom_sheet_background"
-                    android:elevation="5dp">
-
-                    <TextView
-                        android:id="@+id/types_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/types_title"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="17sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:id="@+id/type_1_continer"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/types_title"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/evolution_card_background"
-                        android:elevation="3dp">
-
-                        <TextView
-                            android:id="@+id/type_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:gravity="center"/>
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/vertical_separator_1"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="@color/dark_gray"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/type_1_continer"
-                        app:layout_constraintBottom_toBottomOf="@id/type_1_continer"/>
-
-                    <LinearLayout
-                        android:id="@+id/type_2_continer"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/types_title"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/evolution_card_background"
-                        android:elevation="3dp">
-                        <TextView
-                            android:id="@+id/type_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:gravity="center"/>
-
-                    </LinearLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/types_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:padding="5dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/bottom_sheet_background"
+                        android:elevation="5dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="5dp">
+
+                        <TextView
+                            android:id="@+id/types_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/types_title"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:id="@+id/type_1_continer"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/evolution_card_background"
+                            android:elevation="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/types_title">
+
+                            <TextView
+                                android:id="@+id/type_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/vertical_separator_1"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/dark_gray"
+                            app:layout_constraintBottom_toBottomOf="@id/type_1_continer"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/type_1_continer" />
+
+                        <LinearLayout
+                            android:id="@+id/type_2_continer"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/evolution_card_background"
+                            android:elevation="3dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/types_title">
+
+                            <TextView
+                                android:id="@+id/type_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/abilities_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/types_container"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="4dp"
                         android:background="@drawable/inverted_bottom_sheet_background"
-                        android:elevation="5dp">
+                        android:elevation="5dp"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/abilities_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/abilities_title"
                             android:layout_gravity="center"
-                            android:textStyle="bold"
+                            android:text="@string/abilities_title"
                             android:textColor="@color/dark_gray"
                             android:textSize="17sp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -257,71 +267,69 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textStyle="italic"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="@color/dark_gray"
                             android:textSize="15sp"
+                            android:textStyle="italic"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/abilities_title"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="5dp" />
+                            app:layout_constraintTop_toBottomOf="@id/abilities_title" />
 
                         <View
                             android:id="@+id/vertical_separator"
                             android:layout_width="1dp"
                             android:layout_height="20dp"
-                            app:layout_constraintStart_toEndOf="@id/ability_1"
-                            app:layout_constraintTop_toBottomOf="@id/abilities_title"
-                            app:layout_constraintEnd_toStartOf="@id/ability_2"
+                            android:layout_marginTop="5dp"
                             android:background="@color/dark_gray"
-                            android:layout_marginTop="5dp" />
+                            app:layout_constraintEnd_toStartOf="@id/ability_2"
+                            app:layout_constraintStart_toEndOf="@id/ability_1"
+                            app:layout_constraintTop_toBottomOf="@id/abilities_title" />
 
                         <TextView
                             android:id="@+id/ability_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textStyle="italic"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="30dp"
                             android:textColor="@color/dark_gray"
                             android:textSize="15sp"
+                            android:textStyle="italic"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/abilities_title"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginTop="5dp" />
+                            app:layout_constraintTop_toBottomOf="@id/abilities_title" />
 
                         <View
                             android:id="@+id/horizontal_separator"
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/ability_1"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:background="@color/dark_gray"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp" />
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@color/dark_gray"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ability_1" />
 
                         <TextView
                             android:id="@+id/hidden_ability"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textStyle="italic"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="15sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/horizontal_separator"
                             android:layout_marginStart="30dp"
                             android:layout_marginTop="8dp"
-                            android:paddingBottom="5dp" />
+                            android:paddingBottom="5dp"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="15sp"
+                            android:textStyle="italic"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/horizontal_separator" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
-
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/round_corners_background"
@@ -373,16 +381,11 @@
                     android:id="@+id/evolution_chain_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:visibility="gone"/>
+                    android:layout_margin="5dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:minHeight="50dp"/>
             </LinearLayout>
-
-
-
-
-
-
         </LinearLayout>
     </ScrollView>
 </layout>
