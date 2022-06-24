@@ -16,7 +16,7 @@ import com.adevinta.android.barista.internal.matcher.DrawableMatcher.Companion.w
 import com.example.mypokedex.ui.BaseActivity
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
-import org.hamcrest.core.AllOf
+import org.hamcrest.core.AllOf.allOf
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -44,7 +44,7 @@ class PokemonListFeature {
         assertRecyclerViewItemCount(R.id.pokemon_list, 10)
 
         Espresso.onView(
-            AllOf.allOf(
+            allOf(
                 withId(R.id.poke_id),
                 ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
             )
@@ -52,7 +52,7 @@ class PokemonListFeature {
             .check(matches(ViewMatchers.isDisplayed()))
 
         Espresso.onView(
-            AllOf.allOf(
+            allOf(
                 withId(R.id.poke_name),
                 ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
             )
@@ -60,7 +60,7 @@ class PokemonListFeature {
             .check(matches(ViewMatchers.isDisplayed()))
 
         Espresso.onView(
-            AllOf.allOf(
+            allOf(
                 withId(R.id.pokeball),
                 ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
             )
