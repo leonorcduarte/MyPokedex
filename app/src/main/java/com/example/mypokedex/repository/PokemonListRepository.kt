@@ -12,7 +12,7 @@ constructor(
     private val service: ApiService
 ){
 
-    fun getPokemonList(limit: Int, offset: Int): Flow<Resource<PokemonResponse>> = flow {
+    fun getPokemonList(limit: Int = 10, offset: Int = 0): Flow<Resource<PokemonResponse>> = flow {
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data=service.getPokemonList(limit, offset)))

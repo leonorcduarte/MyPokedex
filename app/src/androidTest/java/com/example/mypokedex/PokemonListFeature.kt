@@ -3,6 +3,7 @@ package com.example.mypokedex
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -43,7 +44,7 @@ class PokemonListFeature {
     fun displaysListOfPokemons(){
         assertRecyclerViewItemCount(R.id.pokemon_list, 10)
 
-        Espresso.onView(
+        onView(
             allOf(
                 withId(R.id.poke_id),
                 ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
@@ -51,7 +52,7 @@ class PokemonListFeature {
         ).check(matches(withText("#001")))
             .check(matches(ViewMatchers.isDisplayed()))
 
-        Espresso.onView(
+        onView(
             allOf(
                 withId(R.id.poke_name),
                 ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
@@ -59,7 +60,7 @@ class PokemonListFeature {
         ).check(matches(withText("bulbasaur")))
             .check(matches(ViewMatchers.isDisplayed()))
 
-        Espresso.onView(
+        onView(
             allOf(
                 withId(R.id.pokeball),
                 ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
