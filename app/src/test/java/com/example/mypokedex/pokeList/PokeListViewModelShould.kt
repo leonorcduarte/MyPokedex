@@ -16,6 +16,7 @@ import org.junit.Assert.*
 
 import com.example.mypokedex.util.Resource
 import com.example.mypokedex.utils.BaseUnitTest
+import com.example.mypokedex.utils.captureValues
 import com.nhaarman.mockitokotlin2.mock
 
 class PokeListViewModelShould : BaseUnitTest(){
@@ -44,6 +45,47 @@ class PokeListViewModelShould : BaseUnitTest(){
 
     @Test
     fun emitErrorWhenReceiveError(){
+        val viewModel = mockErrorCase()
+
+        viewModel.getPokemonList()
+
+        assertEquals(exception, viewModel.pokemonResponseList.getValueForTest()!!)
+    }
+
+    @Test
+    fun showLoaderWhileLoading(): Unit = runBlocking {
+        val viewModel = mockSuccessfulCase()
+
+        viewModel.loader.captureValues {
+            viewModel.getPokemonList()
+
+            assertEquals(true, values[0])
+        }
+    }
+
+    @Test
+    fun hideLoaderAfterPokemonListLoad(): Unit = runBlocking{
+        val viewModel = mockSuccessfulCase()
+
+        viewModel.loader.captureValues {
+            viewModel.getPokemonList()
+
+            assertEquals(false, values.last())
+        }
+    }
+
+    @Test
+    fun hideLoaderAfterError(): Unit = runBlocking {
+        val viewModel = mockErrorCase()
+
+        viewModel.loader.captureValues {
+            viewModel.getPokemonList()
+
+            assertEquals(false, values.last())
+        }
+    }
+
+    private fun mockErrorCase(): PokeListViewModel {
         runBlocking {
             whenever(repository.getPokemonList()).thenReturn(
                 flow {
@@ -52,10 +94,7 @@ class PokeListViewModelShould : BaseUnitTest(){
             )
         }
 
-        val viewModel = PokeListViewModel(repository, detailRepository)
-        viewModel.getPokemonList()
-
-        assertEquals(exception, viewModel.pokemonResponseList.getValueForTest()!!)
+        return PokeListViewModel(repository, detailRepository)
     }
 
     private fun mockSuccessfulCase(): PokeListViewModel {

@@ -30,7 +30,7 @@ class PokemonListFeature {
 
     val mActivityRule = ActivityScenarioRule(BaseActivity::class.java)
         @Rule get
-
+    
     @Test
     fun displayScreenTitle() {
         assertDisplayed("My Pokédex")
@@ -40,6 +40,12 @@ class PokemonListFeature {
     fun displayStickyDialogView(){
         Thread.sleep(2000)
         assertDisplayed(R.id.dialog)
+    }
+
+    @Test
+    fun hidesLoader(){
+        Thread.sleep(2000)
+        assertNotDisplayed(R.id.loading)
     }
 
     @Test

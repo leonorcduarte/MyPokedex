@@ -206,10 +206,13 @@ class PokeListFragment : Fragment(), PokemonListAdapter.OnItemClickListener {
     }
 
     private fun displayLoading(isDisplayed: Boolean) {
-        if (isDisplayed)
+        if (isDisplayed) {
             binding.loading.visibility = View.GONE
-        else if (!updateList)
+            viewModel.loader.value = false
+        } else if (!updateList) {
             binding.loading.visibility = View.VISIBLE
+            viewModel.loader.value = true
+        }
     }
 
     private fun listVisibility(hide: Boolean) {

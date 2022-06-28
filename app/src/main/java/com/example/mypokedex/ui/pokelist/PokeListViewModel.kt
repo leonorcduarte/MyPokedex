@@ -28,6 +28,8 @@ constructor(
 
     var pokemonList: MutableList<BaseModel> = mutableListOf()
 
+    var loader = MutableLiveData<Boolean>()
+
     private val _pokemonResponse: MutableLiveData<Resource<PokemonResponse>> = MutableLiveData()
     val pokemonResponseList: LiveData<Resource<PokemonResponse>>
         get() = _pokemonResponse
@@ -41,8 +43,10 @@ constructor(
         get() = _pokemonSpecies
 
     fun getPokemonList(limit: Int = 10, offset: Int = 0) {
+        loader.postValue(true)
         viewModelScope.launch {
             pokemonListRepository.getPokemonList(limit, offset).onEach { resource ->
+                loader.postValue(false)
                 _pokemonResponse.value = resource
             }
                 .launchIn(viewModelScope)
