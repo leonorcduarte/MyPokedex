@@ -8,8 +8,9 @@ import com.example.mypokedex.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
+import javax.inject.Inject
 
-class PokemonDetailRepository(
+class PokemonDetailRepository @Inject constructor(
     private val service: ApiService
 ) {
 
