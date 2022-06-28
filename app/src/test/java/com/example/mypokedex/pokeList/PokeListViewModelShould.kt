@@ -24,7 +24,7 @@ class PokeListViewModelShould : BaseUnitTest(){
     private val detailRepository: PokemonDetailRepository = mock()
     private val pokemonResponse = mock<PokemonResponse>()
     private val expected = Resource.success(pokemonResponse)
-    private val exception = Resource.error(pokemonResponse, "Error occured")
+    private val exception = Resource.error(pokemonResponse, "Error occurred")
 
     @Test
     fun getPokemonResponseFromRepository(): Unit = runBlocking{

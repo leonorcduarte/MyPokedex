@@ -17,8 +17,8 @@ interface ApiService {
 
     @GET("pokemon/")
     suspend fun getPokemonList(
-        @Query("limit") limit: Int,
-        @Query("offset") offset: Int
+        @Query("limit") limit: Int = 10,
+        @Query("offset") offset: Int = 0
     ): PokemonResponse
 
     @GET("pokemon-species/{id}")

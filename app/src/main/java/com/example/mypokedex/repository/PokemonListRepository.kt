@@ -16,7 +16,7 @@ class PokemonListRepository(
         try {
             emit(Resource.success(data=service.getPokemonList(limit, offset)))
         }catch (e: Exception){
-            emit(Resource.error(data=null,message = e.message?:"Error occured"))
+            emit(Resource.error(data=null,message = e.message?:"Error occurred"))
         }
     }
 }
