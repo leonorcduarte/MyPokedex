@@ -37,16 +37,14 @@ class PokeListRepositoryShould : BaseUnitTest() {
     }
 
     @Test
-    fun propagateErrors(): Unit = runBlocking {
-        val repository = mockFailureCase()
+    fun emitErrorWhenNetworkFails(): Unit = runBlocking {
+        val repository = mockErrorCase()
 
-        assertEquals(exception.message, repository.getPokemonList().toList().last().message)
+        assertEquals("Error occurred", repository.getPokemonList().toList().last().message)
     }
 
-    private suspend fun mockFailureCase(): PokemonListRepository {
-        whenever(service.getPokemonList()).thenThrow(
-            exception
-        )
+    private suspend fun mockErrorCase(): PokemonListRepository {
+        whenever(service.getPokemonList()).thenThrow(exception)
 
         return PokemonListRepository(service)
     }
