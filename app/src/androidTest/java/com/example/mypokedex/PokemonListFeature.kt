@@ -15,6 +15,7 @@ import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assert
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import com.adevinta.android.barista.internal.matcher.DrawableMatcher.Companion.withDrawable
 import com.example.mypokedex.ui.BaseActivity
+import kotlinx.coroutines.Delay
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.AllOf.allOf
@@ -36,12 +37,15 @@ class PokemonListFeature {
     }
 
     @Test
-    fun doNotDisplayStickyDialogView(){
-        assertNotDisplayed(R.id.dialog)
+    fun displayStickyDialogView(){
+        Thread.sleep(2000)
+        assertDisplayed(R.id.dialog)
     }
 
     @Test
     fun displaysListOfPokemons(){
+        Thread.sleep(2000)
+
         assertRecyclerViewItemCount(R.id.pokemon_list, 10)
 
         onView(
@@ -75,7 +79,6 @@ class PokemonListFeature {
      * when accessing the parent view, in this case the list, we access the nth child
      * if childPosition = 0, returns the first item in the list
      */
-
     fun nthChildOf(parentMatcher: Matcher<View>, childPosition: Int): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
             public override fun matchesSafely(view: View): Boolean {
