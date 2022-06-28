@@ -204,7 +204,7 @@ class PokeDetailFragment: Fragment() {
         for (colorPair: Pair<String, List<Int?>> in colorPairList){
             if(pokemonSpecies.color.name == colorPair.first){
                 backgroundColorPair = colorPair
-                colorPair.second[0]?.let { binding.mainLayout.setBackgroundColor(it) }
+                colorPair.second[0]?.let { binding.mainDetailLayout.setBackgroundColor(it) }
                 colorPair.second[1]?.let { binding.flavorContainer.background.setTint(it) }
             }
         }

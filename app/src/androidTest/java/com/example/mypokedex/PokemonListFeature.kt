@@ -2,12 +2,15 @@ package com.example.mypokedex
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
@@ -15,6 +18,7 @@ import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assert
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import com.adevinta.android.barista.internal.matcher.DrawableMatcher.Companion.withDrawable
 import com.example.mypokedex.ui.BaseActivity
+import com.example.mypokedex.ui.pokelist.adapters.PokemonListAdapter
 import kotlinx.coroutines.Delay
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
@@ -57,26 +61,35 @@ class PokemonListFeature {
         onView(
             allOf(
                 withId(R.id.poke_id),
-                ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
+                isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
             )
         ).check(matches(withText("#001")))
-            .check(matches(ViewMatchers.isDisplayed()))
+            .check(matches(isDisplayed()))
 
         onView(
             allOf(
                 withId(R.id.poke_name),
-                ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
+                isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
             )
         ).check(matches(withText("bulbasaur")))
-            .check(matches(ViewMatchers.isDisplayed()))
+            .check(matches(isDisplayed()))
 
         onView(
             allOf(
                 withId(R.id.pokeball),
-                ViewMatchers.isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
+                isDescendantOfA(nthChildOf(withId(R.id.pokemon_list), 0))
             )
         ).check(matches(withDrawable(R.drawable.pokeball_icon)))
-            .check(matches(ViewMatchers.isDisplayed()))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun navigateToDetailScreen(){
+        onView(withId(R.id.pokemon_list)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+
+        Thread.sleep(500)
+        assertDisplayed(R.id.main_detail_layout)
     }
 
 
