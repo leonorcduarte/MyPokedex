@@ -7,8 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 
-class PokemonListRepository
-constructor(
+class PokemonListRepository(
     private val service: ApiService
 ){
 

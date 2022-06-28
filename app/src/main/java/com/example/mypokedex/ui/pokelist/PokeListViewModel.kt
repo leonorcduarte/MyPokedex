@@ -40,7 +40,7 @@ constructor(
     val pokemonSpecies: LiveData<Resource<PokemonSpecies>>
         get() = _pokemonSpecies
 
-    fun getPokemonList(limit: Int, offset: Int) {
+    fun getPokemonList(limit: Int = 10, offset: Int = 0) {
         viewModelScope.launch {
             pokemonListRepository.getPokemonList(limit, offset).onEach { resource ->
                 _pokemonResponse.value = resource

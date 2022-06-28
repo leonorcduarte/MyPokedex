@@ -5,7 +5,6 @@ import com.example.mypokedex.repository.PokemonDetailRepository
 import com.example.mypokedex.repository.PokemonListRepository
 import com.example.mypokedex.ui.pokelist.PokeListViewModel
 import com.example.mypokedex.utils.getValueForTest
-import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -17,28 +16,28 @@ import org.junit.Assert.*
 
 import com.example.mypokedex.util.Resource
 import com.example.mypokedex.utils.BaseUnitTest
+import com.nhaarman.mockitokotlin2.mock
 
 class PokeListViewModelShould : BaseUnitTest(){
 
     private val repository: PokemonListRepository = mock()
     private val detailRepository: PokemonDetailRepository = mock()
-    private val pokemonResponseList = mock<PokemonResponse>()
-    private val expected = Resource.success(pokemonResponseList)
-    private val exception = Resource.error(pokemonResponseList, "Something went wrong")
+    private val pokemonResponse = mock<PokemonResponse>()
+    private val expected = Resource.success(pokemonResponse)
+    private val exception = Resource.error(pokemonResponse, "Error occured")
 
     @Test
     fun getPokemonResponseFromRepository(): Unit = runBlocking{
         val viewModel = mockSuccessfulCase()
-        viewModel.pokemonResponseList.getValueForTest()
+        viewModel.getPokemonList()
 
         verify(repository, times(1)).getPokemonList()
     }
 
     @Test
     fun emitPokemonResponseFromRepository(): Unit = runBlocking {
-
         val viewModel = mockSuccessfulCase()
-        viewModel.pokemonResponseList.getValueForTest()
+        viewModel.getPokemonList()
 
         assertEquals(expected, viewModel.pokemonResponseList.getValueForTest())
     }
@@ -52,6 +51,11 @@ class PokeListViewModelShould : BaseUnitTest(){
                 }
             )
         }
+
+        val viewModel = PokeListViewModel(repository, detailRepository)
+        viewModel.getPokemonList()
+
+        assertEquals(exception, viewModel.pokemonResponseList.getValueForTest()!!)
     }
 
     private fun mockSuccessfulCase(): PokeListViewModel {
