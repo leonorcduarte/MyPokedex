@@ -5,6 +5,8 @@ This application is prepared for different screens of different sizes as well as
 
 MyPokedex is built on MVVM (model-view-viewmodel), which allows you to separate developments from the backend logic (the model) from the graphical interface (the view); and so the ViewModel deals with the view's display logic. Furthermore, Hilt is used as dependency injection library to speed up the process of creating and providing dependencies. In order to be able to consult this information about Pokémons, Retrofit is used to make the connection between the app and the RESTful services of the API [pokeapi](https://pokeapi.co/ "Poke API").
 
+[Update] This project now includes Unit tests and Acceptance tests for the PokemonList feature.
+
 ## MyPokedex previews
 ### Splash Screen
 ![SplahScreen](/screenshots/Splash.png)
