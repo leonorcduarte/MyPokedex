@@ -14,6 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+//val client = OkHttpClient()
+//val idlingResource = OkHttp3IdlingResource.create("okhttp", client)
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
