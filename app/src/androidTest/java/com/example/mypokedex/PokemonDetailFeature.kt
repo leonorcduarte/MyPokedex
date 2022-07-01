@@ -12,14 +12,19 @@ class PokemonDetailFeature : BaseUITest() {
 
     @Test
     fun displayPokemonTitleNameAndId(){
-        Thread.sleep(2000)
-        onView(withId(R.id.pokemon_list)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-
-        Thread.sleep(1000)
+        navigateToPokemonDetails()
 
         assertDisplayed("Pokémon Detail")
         assertDisplayed("bulbasaur")
         assertDisplayed("#001")
+    }
+
+    private fun navigateToPokemonDetails() {
+        Thread.sleep(2000)
+        onView(withId(R.id.pokemon_list)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
+        )
+
+        Thread.sleep(1000)
     }
 }
