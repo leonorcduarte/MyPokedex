@@ -16,12 +16,8 @@ import org.hamcrest.core.AllOf.allOf
 
 import org.junit.Test
 
-import org.junit.Rule
 
 class PokemonListFeature : BaseUITest(){
-
-    val mActivityRule = ActivityScenarioRule(BaseActivity::class.java)
-        @Rule get
     
     @Test
     fun displayScreenTitle() {
@@ -73,10 +69,11 @@ class PokemonListFeature : BaseUITest(){
 
     @Test
     fun navigateToDetailScreen(){
+        Thread.sleep(2000)
         onView(withId(R.id.pokemon_list)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
 
-        Thread.sleep(500)
+        Thread.sleep(1000)
         assertDisplayed(R.id.main_detail_layout)
     }
 }

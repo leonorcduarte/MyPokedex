@@ -2,14 +2,20 @@ package com.example.mypokedex
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.mypokedex.ui.BaseActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
+import org.junit.Rule
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 abstract class BaseUITest {
+
+    val mActivityRule = ActivityScenarioRule(BaseActivity::class.java)
+        @Rule get
 
     /*@Before
     fun setUp() {
